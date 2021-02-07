@@ -5,7 +5,7 @@
 ##Docker
 ###Build image (need to build jar file first)
 ```docker build -t geosearchengine:latest .```
-##Run image
+###Run image
 ````docker run -d -p 9090:8080 geosearchengine````
-##Verify docker run
+###Verify docker run
 ```docker ps```
