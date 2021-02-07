@@ -1,4 +1,4 @@
-package com.thales.GeoSearchEngine;
+package com.shyam.GeoSearchEngine;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

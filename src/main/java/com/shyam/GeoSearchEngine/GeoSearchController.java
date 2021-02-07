@@ -1,19 +1,16 @@
-package com.thales.GeoSearchEngine;
+package com.shyam.GeoSearchEngine;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.thales.GeoSearchEngine.core.AppConfiguration;
-import com.thales.GeoSearchEngine.models.GeoPoint;
-import com.thales.GeoSearchEngine.models.GeoPointWithID;
-import com.thales.GeoSearchEngine.models.Place;
-import com.thales.GeoSearchEngine.models.StringResponse;
-import com.thales.GeoSearchEngine.repositories.PlacesRepository;
-import netscape.javascript.JSObject;
+import com.shyam.GeoSearchEngine.core.AppConfiguration;
+import com.shyam.GeoSearchEngine.models.GeoPoint;
+import com.shyam.GeoSearchEngine.models.Place;
+import com.shyam.GeoSearchEngine.models.StringResponse;
+import com.shyam.GeoSearchEngine.repositories.PlacesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

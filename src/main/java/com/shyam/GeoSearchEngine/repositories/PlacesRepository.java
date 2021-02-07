@@ -1,6 +1,6 @@
-package com.thales.GeoSearchEngine.repositories;
+package com.shyam.GeoSearchEngine.repositories;
 
-import com.thales.GeoSearchEngine.models.Place;
+import com.shyam.GeoSearchEngine.models.Place;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

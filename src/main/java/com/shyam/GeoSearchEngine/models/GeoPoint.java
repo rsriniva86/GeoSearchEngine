@@ -1,4 +1,4 @@
-package com.thales.GeoSearchEngine.models;
+package com.shyam.GeoSearchEngine.models;
 
 public class GeoPoint {
     private double latitude;

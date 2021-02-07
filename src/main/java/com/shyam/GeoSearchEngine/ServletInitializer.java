@@ -1,4 +1,4 @@
-package com.thales.GeoSearchEngine;
+package com.shyam.GeoSearchEngine;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

@@ -1,4 +1,4 @@
-package com.thales.GeoSearchEngine.core;
+package com.shyam.GeoSearchEngine.core;
 
 public interface AppConfiguration {
 

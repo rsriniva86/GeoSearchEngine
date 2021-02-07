@@ -1,4 +1,4 @@
-package com.thales.GeoSearchEngine;
+package com.shyam.GeoSearchEngine;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
