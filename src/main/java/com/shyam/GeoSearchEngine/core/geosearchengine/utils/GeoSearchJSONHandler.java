@@ -23,6 +23,7 @@ public enum GeoSearchJSONHandler {
      * This method converts a list of TestDataDB into Map of String and List<TestData>
      * The key for the map is the location.
      * The value for the map is the different test data (including geo points) for that location.
+     *
      * @param testDataPoints
      * @return
      */
@@ -42,7 +43,7 @@ public enum GeoSearchJSONHandler {
                         new Geopoint(
                                 testDataDb.getGeoLocation().getLatitude(),
                                 testDataDb.getGeoLocation().getLongitude()
-                                )
+                        )
                 ))
                 .collect(groupingBy(TestData::getLocation));
 
@@ -50,15 +51,16 @@ public enum GeoSearchJSONHandler {
 
     /**
      * This is a simple utility method to create a ObjectNode JSOn for the exactNameMatch and partialNameMatch.
+     *
      * @param exactNameMatch
      * @param partialNameMatch
      * @return
      */
-    public ObjectNode createStatsJSON(int exactNameMatch, int partialNameMatch)  {
+    public ObjectNode createStatsJSON(int exactNameMatch, int partialNameMatch) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode rootNode = mapper.createObjectNode();
         rootNode.put("exactMatchCount", exactNameMatch);
         rootNode.put("matchCount", partialNameMatch);
-       return rootNode;
+        return rootNode;
     }
 }

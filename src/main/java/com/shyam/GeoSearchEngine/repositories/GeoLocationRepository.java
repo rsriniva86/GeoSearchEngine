@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Repository class for GeoLocation table
  */
-public interface GeoLocationRepository extends CrudRepository<GeoLocationDB,Long> {
+public interface GeoLocationRepository extends CrudRepository<GeoLocationDB, Long> {
 
     GeoLocationDB findByLocation(String location);
 

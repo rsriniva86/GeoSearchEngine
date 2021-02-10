@@ -13,12 +13,12 @@ public class Geopoint {
         return latitude;
     }
 
-    public double getLongitude() {
-        return longitude;
-    }
-
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
     }
 
     public void setLongitude(double longitude) {

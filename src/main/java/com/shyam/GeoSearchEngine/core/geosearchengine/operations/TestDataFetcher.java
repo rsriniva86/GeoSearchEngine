@@ -11,12 +11,12 @@ import org.apache.logging.log4j.Logger;
  */
 public class TestDataFetcher implements GeoSearchEngineOperation {
 
-    private static final Logger logger= LogManager.getLogger(TestDataFetcher.class);
+    private static final Logger logger = LogManager.getLogger(TestDataFetcher.class);
 
     private final TestDataRepository testDataRepository;
 
-    public TestDataFetcher(TestDataRepository testDataRepository){
-        this.testDataRepository=testDataRepository;
+    public TestDataFetcher(TestDataRepository testDataRepository) {
+        this.testDataRepository = testDataRepository;
     }
 
     @Override
@@ -26,15 +26,12 @@ public class TestDataFetcher implements GeoSearchEngineOperation {
         Iterable<TestDataDB> testDataPoints = testDataRepository.findAll();
         long timeTaken = System.currentTimeMillis() - startTime;
         logger.info("Time Taken = " + timeTaken);
-        Object object=
+        Object object =
                 GeoSearchJSONHandler
                         .INSTANCE
                         .groupByLocation(testDataPoints);
         return object;
     }
-
-
-
 
 
 }
