@@ -1,5 +1,6 @@
 package com.shyam.GeoSearchEngine.core.geosearchengine;
 
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -49,11 +50,11 @@ public enum PlacesJSONHandler {
 
     }
 
-    public String createStatsJSON(int exactNameMatch, int partialNameMatch) throws JsonProcessingException {
+    public ObjectNode createStatsJSON(int exactNameMatch, int partialNameMatch) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode rootNode = mapper.createObjectNode();
         rootNode.put("exactMatchCount", exactNameMatch);
         rootNode.put("matchCount", partialNameMatch);
-        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(rootNode);
+       return rootNode;
     }
 }

@@ -1,5 +1,6 @@
 package com.shyam.GeoSearchEngine;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.shyam.GeoSearchEngine.core.geosearchengine.PlacesFetcher;
 import com.shyam.GeoSearchEngine.core.geosearchengine.PlacesStatsFetcher;
 import com.shyam.GeoSearchEngine.core.geosearchengine.PlacesUpdator;
@@ -37,7 +38,7 @@ public class GeoSearchController {
     }
 
     @GetMapping("places/stats")
-    public String nameStats(@RequestParam String name) throws Exception {
+    public ObjectNode nameStats(@RequestParam String name) throws Exception {
         PlacesStatsFetcher fetcher = new PlacesStatsFetcher();
         return fetcher.get(placesRepository, name);
     }
