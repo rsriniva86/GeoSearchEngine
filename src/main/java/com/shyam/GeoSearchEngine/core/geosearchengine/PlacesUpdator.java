@@ -1,8 +1,8 @@
 package com.shyam.GeoSearchEngine.core.geosearchengine;
 
 import com.shyam.GeoSearchEngine.models.db.DBGeoLocation;
-import com.shyam.GeoSearchEngine.models.json.GeoLocation;
-import com.shyam.GeoSearchEngine.models.json.GeoPoint;
+import com.shyam.GeoSearchEngine.models.json.Geolocation;
+import com.shyam.GeoSearchEngine.models.json.Geopoint;
 import com.shyam.GeoSearchEngine.models.db.DBPlace;
 import com.shyam.GeoSearchEngine.models.json.TestData;
 import com.shyam.GeoSearchEngine.repositories.GeoLocationRepository;
@@ -16,11 +16,11 @@ public class PlacesUpdator {
     public Map<String, List<TestData>> update(PlacesRepository placesRepository,
                           GeoLocationRepository geoLocationRepository,
                           int id,
-                          GeoLocation geoLocation,
+                          Geolocation geoLocation,
                           boolean isOverwrite) {
 
         long startTime = System.currentTimeMillis();
-        GeoPoint geoPoint=geoLocation.getGeopoint();
+        Geopoint geoPoint=geoLocation.getGeopoint();
         DBGeoLocation dbGeoLocation=
                 geoLocationRepository.findByLocation(geoLocation.getLocation());
         if(dbGeoLocation!=null){

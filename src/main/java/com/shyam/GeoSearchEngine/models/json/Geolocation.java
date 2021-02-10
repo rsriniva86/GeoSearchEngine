@@ -1,14 +1,12 @@
 package com.shyam.GeoSearchEngine.models.json;
 
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
-
-public class GeoLocation {
+public class Geolocation {
 
     private String location;
 
-    private GeoPoint geopoint;
+    private Geopoint geopoint;
 
-    public GeoLocation(String location, GeoPoint geopoint) {
+    public Geolocation(String location, Geopoint geopoint) {
         this.location = location;
         this.geopoint = geopoint;
     }
@@ -21,11 +19,11 @@ public class GeoLocation {
         this.location = location;
     }
 
-    public GeoPoint getGeopoint() {
+    public Geopoint getGeopoint() {
         return geopoint;
     }
 
-    public void setGeopoint(GeoPoint geoPoint) {
+    public void setGeopoint(Geopoint geoPoint) {
         this.geopoint = geoPoint;
     }
 }

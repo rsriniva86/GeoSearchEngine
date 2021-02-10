@@ -2,7 +2,7 @@ package com.shyam.GeoSearchEngine.core.geosearchengine;
 
 import com.shyam.GeoSearchEngine.core.AppConfiguration;
 import com.shyam.GeoSearchEngine.models.db.DBGeoLocation;
-import com.shyam.GeoSearchEngine.models.json.GeoPoint;
+import com.shyam.GeoSearchEngine.models.json.Geopoint;
 import com.shyam.GeoSearchEngine.models.db.DBPlace;
 import com.shyam.GeoSearchEngine.models.json.TestData;
 import com.shyam.GeoSearchEngine.repositories.GeoLocationRepository;
@@ -27,7 +27,7 @@ public class PlacesFetcher {
 
     }
 
-    public Map<String, List<TestData>> get(PlacesRepository placesRepository, GeoLocationRepository geoLocationRepository,GeoPoint geoPoint) {
+    public Map<String, List<TestData>> get(PlacesRepository placesRepository, GeoLocationRepository geoLocationRepository, Geopoint geoPoint) {
         long startTime = System.currentTimeMillis();
         System.out.println(" Latitude::" + geoPoint.getLatitude());
         System.out.println("Longitude::" + geoPoint.getLongitude());

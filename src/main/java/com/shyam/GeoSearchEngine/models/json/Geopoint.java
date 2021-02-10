@@ -1,10 +1,10 @@
 package com.shyam.GeoSearchEngine.models.json;
 
-public class GeoPoint {
+public class Geopoint {
     private double latitude;
     private double longitude;
 
-    public GeoPoint(double latitude, double longitude) {
+    public Geopoint(double latitude, double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }

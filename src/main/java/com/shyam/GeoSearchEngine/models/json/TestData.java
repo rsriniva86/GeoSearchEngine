@@ -7,9 +7,9 @@ public class TestData {
     private String name;
     @JsonIgnore
     private String location;
-    private GeoPoint geopoint;
+    private Geopoint geopoint;
 
-    public TestData(long id, String name, String location, GeoPoint geopoint) {
+    public TestData(long id, String name, String location, Geopoint geopoint) {
         this.id = id;
         this.name = name;
         this.location = location;
@@ -40,11 +40,11 @@ public class TestData {
         this.location = location;
     }
 
-    public GeoPoint getGeopoint() {
+    public Geopoint getGeopoint() {
         return geopoint;
     }
 
-    public void setGeopoint(GeoPoint geopoint) {
+    public void setGeopoint(Geopoint geopoint) {
         this.geopoint = geopoint;
     }
 }

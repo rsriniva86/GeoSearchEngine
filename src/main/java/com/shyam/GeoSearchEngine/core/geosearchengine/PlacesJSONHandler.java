@@ -1,11 +1,10 @@
 package com.shyam.GeoSearchEngine.core.geosearchengine;
 
-import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.shyam.GeoSearchEngine.models.db.DBPlace;
-import com.shyam.GeoSearchEngine.models.json.GeoPoint;
+import com.shyam.GeoSearchEngine.models.json.Geopoint;
 import com.shyam.GeoSearchEngine.models.json.TestData;
 
 import java.util.List;
@@ -41,7 +40,7 @@ public enum PlacesJSONHandler {
                         dbPlace.getId(),
                         dbPlace.getName(),
                         dbPlace.getGeoLocation().getLocation(),
-                        new GeoPoint(
+                        new Geopoint(
                                 dbPlace.getGeoLocation().getLatitude(),
                                 dbPlace.getGeoLocation().getLongitude()
                                 )

@@ -4,9 +4,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.shyam.GeoSearchEngine.core.geosearchengine.PlacesFetcher;
 import com.shyam.GeoSearchEngine.core.geosearchengine.PlacesStatsFetcher;
 import com.shyam.GeoSearchEngine.core.geosearchengine.PlacesUpdator;
-import com.shyam.GeoSearchEngine.models.json.GeoLocation;
-import com.shyam.GeoSearchEngine.models.json.GeoPoint;
-import com.shyam.GeoSearchEngine.models.db.DBPlace;
+import com.shyam.GeoSearchEngine.models.json.Geolocation;
+import com.shyam.GeoSearchEngine.models.json.Geopoint;
 import com.shyam.GeoSearchEngine.models.json.TestData;
 import com.shyam.GeoSearchEngine.repositories.GeoLocationRepository;
 import com.shyam.GeoSearchEngine.repositories.PlacesRepository;
@@ -32,7 +31,7 @@ public class GeoSearchController {
     }
 
     @PostMapping("places/search")
-    public @ResponseBody Map<String, List<TestData>> searchPlacesWithinDistance(@RequestBody GeoPoint geoPoint) throws Exception {
+    public @ResponseBody Map<String, List<TestData>> searchPlacesWithinDistance(@RequestBody Geopoint geoPoint) throws Exception {
         PlacesFetcher fetcher = new PlacesFetcher();
         return fetcher.get(placesRepository, geoLocationRepository,geoPoint);
     }
@@ -46,14 +45,14 @@ public class GeoSearchController {
     @PutMapping("/places/{id}")
     public @ResponseBody
     Map<String, List<TestData>> updateGeoPointForPlaces(@PathVariable int id,
-                                    @RequestBody GeoLocation geoLocation) throws Exception {
+                                    @RequestBody Geolocation geoLocation) throws Exception {
         PlacesUpdator placesUpdator = new PlacesUpdator();
         return placesUpdator.update(placesRepository, geoLocationRepository,id, geoLocation, false);
     }
     @PutMapping("/places/{id}/overwrite")
     public @ResponseBody
     Map<String, List<TestData>> updateGeoPointForPlacesOverwrite(@PathVariable int id,
-                                             @RequestBody GeoLocation geoLocation) throws Exception {
+                                             @RequestBody Geolocation geoLocation) throws Exception {
         PlacesUpdator placesUpdator = new PlacesUpdator();
         return placesUpdator.update(placesRepository, geoLocationRepository,id, geoLocation,true);
     }
