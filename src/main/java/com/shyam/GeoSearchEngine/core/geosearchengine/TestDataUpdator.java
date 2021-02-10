@@ -1,5 +1,8 @@
 package com.shyam.GeoSearchEngine.core.geosearchengine;
 
+import com.shyam.GeoSearchEngine.core.geosearchengine.error.GeoSearchEngineException;
+import com.shyam.GeoSearchEngine.core.geosearchengine.operations.GeoSearchEngineOperation;
+import com.shyam.GeoSearchEngine.core.geosearchengine.utils.GeoSearchJSONHandler;
 import com.shyam.GeoSearchEngine.models.db.DBGeoLocation;
 import com.shyam.GeoSearchEngine.models.json.Geolocation;
 import com.shyam.GeoSearchEngine.models.json.Geopoint;
@@ -13,12 +16,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TestDataUpdator {
-    public Map<String, Object> update(TestDataRepository testDataRepository,
-                                              GeoLocationRepository geoLocationRepository,
-                                              int id,
-                                              Geolocation geoLocation,
-                                              boolean isOverwrite) throws GeoSearchEngineException{
+public class TestDataUpdator implements GeoSearchEngineOperation {
+
+    private final TestDataRepository testDataRepository;
+    private final GeoLocationRepository geoLocationRepository;
+    private final int id;
+    private final Geolocation geoLocation;
+    private final boolean isOverwrite;
+
+
+    public TestDataUpdator(TestDataRepository testDataRepository,
+                           GeoLocationRepository geoLocationRepository,
+                           int id,
+                           Geolocation geoLocation,
+                           boolean isOverwrite) {
+        this.testDataRepository=testDataRepository;
+        this.geoLocationRepository=geoLocationRepository;
+        this.id=id;
+        this.geoLocation=geoLocation;
+        this.isOverwrite=isOverwrite;
+
+
+    }
+
+    @Override
+    public Object doOperation() throws Exception {
 
         boolean isExistingLocation=false;
         boolean isGeopointOverwritten=false;
@@ -71,7 +93,5 @@ public class TestDataUpdator {
         updateRecordMap.put("isGeopointOverwritten",isGeopointOverwritten);
         updateRecordMap.put("data",data);
 
-        return updateRecordMap;
-
-    }
+        return updateRecordMap;    }
 }

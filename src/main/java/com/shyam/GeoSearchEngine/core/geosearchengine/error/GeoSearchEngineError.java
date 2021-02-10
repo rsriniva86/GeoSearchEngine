@@ -1,4 +1,4 @@
-package com.shyam.GeoSearchEngine.core.geosearchengine;
+package com.shyam.GeoSearchEngine.core.geosearchengine.error;
 
 public class GeoSearchEngineError {
 

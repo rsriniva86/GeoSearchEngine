@@ -1,9 +1,14 @@
 package com.shyam.GeoSearchEngine.core.geosearchengine;
 
+import com.shyam.GeoSearchEngine.core.geosearchengine.error.GeoSearchEngineError;
+import com.shyam.GeoSearchEngine.core.geosearchengine.error.GeoSearchEngineErrorCode;
+import com.shyam.GeoSearchEngine.core.geosearchengine.error.GeoSearchEngineException;
+import com.shyam.GeoSearchEngine.core.geosearchengine.operations.GeoSearchEngineOperation;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public enum ResponseWrapper {
+public enum GeoSearchResponseWrapper {
     INSTANCE;
     public Map<String,Object> wrap(GeoSearchEngineOperation operation){
         Map<String,Object> returnMap=new HashMap();

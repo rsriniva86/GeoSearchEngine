@@ -1,4 +1,4 @@
-package com.shyam.GeoSearchEngine.core.geosearchengine;
+package com.shyam.GeoSearchEngine.core.geosearchengine.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

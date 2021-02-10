@@ -1,4 +1,4 @@
-package com.shyam.GeoSearchEngine.core.geosearchengine;
+package com.shyam.GeoSearchEngine.core.geosearchengine.operations;
 
 import java.util.Map;
 

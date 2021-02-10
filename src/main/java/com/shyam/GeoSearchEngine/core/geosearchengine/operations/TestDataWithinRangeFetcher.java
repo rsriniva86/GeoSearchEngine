@@ -1,9 +1,10 @@
-package com.shyam.GeoSearchEngine.core.geosearchengine;
+package com.shyam.GeoSearchEngine.core.geosearchengine.operations;
 
 import com.shyam.GeoSearchEngine.core.AppConfiguration;
+import com.shyam.GeoSearchEngine.core.geosearchengine.utils.GeoSearchJSONHandler;
 import com.shyam.GeoSearchEngine.models.db.DBGeoLocation;
-import com.shyam.GeoSearchEngine.models.json.Geopoint;
 import com.shyam.GeoSearchEngine.models.db.TestDataDB;
+import com.shyam.GeoSearchEngine.models.json.Geopoint;
 import com.shyam.GeoSearchEngine.models.json.TestData;
 import com.shyam.GeoSearchEngine.repositories.GeoLocationRepository;
 import com.shyam.GeoSearchEngine.repositories.TestDataRepository;
@@ -13,27 +14,29 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public class TestDataFetcher {
+public class TestDataWithinRangeFetcher implements GeoSearchEngineOperation {
 
-    public Map<String, List<TestData>> get(final TestDataRepository testDataRepository)  {
-        long startTime = System.currentTimeMillis();
-        Iterable<TestDataDB> testDataPoints = testDataRepository.findAll();
-        long timeTaken = System.currentTimeMillis() - startTime;
-        System.out.println("Time Taken = " + timeTaken);
-        return
-                GeoSearchJSONHandler
-                        .INSTANCE
-                        .groupByLocation(testDataPoints);
+
+    private final TestDataRepository testDataRepository;
+    private final GeoLocationRepository geoLocationRepository;
+    private final Geopoint geopoint;
+    public TestDataWithinRangeFetcher(TestDataRepository testDataRepository,
+                                      GeoLocationRepository geoLocationRepository,
+                                      Geopoint geoPoint){
+        this.testDataRepository=testDataRepository;
+        this.geoLocationRepository=geoLocationRepository;
+        this.geopoint=geoPoint;
 
     }
 
-    public Map<String, List<TestData>> get(TestDataRepository testDataRepository, GeoLocationRepository geoLocationRepository, Geopoint geoPoint) {
+    @Override
+    public Object doOperation() throws Exception {
         long startTime = System.currentTimeMillis();
-        System.out.println(" Latitude::" + geoPoint.getLatitude());
-        System.out.println("Longitude::" + geoPoint.getLongitude());
+        System.out.println(" Latitude::" + geopoint.getLatitude());
+        System.out.println("Longitude::" + geopoint.getLongitude());
         Iterable<DBGeoLocation> geoLocations=geoLocationRepository.findWithinXKms(
-                geoPoint.getLatitude(),
-                geoPoint.getLongitude(),
+                geopoint.getLatitude(),
+                geopoint.getLongitude(),
                 AppConfiguration.DISTANCE_RANGE
         );
         List<Long> locationIDList = StreamSupport
@@ -48,6 +51,10 @@ public class TestDataFetcher {
         return GeoSearchJSONHandler
                 .INSTANCE
                 .groupByLocation(testDataPoints);
-
     }
+
+
+
+
+
 }
