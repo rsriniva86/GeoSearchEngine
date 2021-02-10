@@ -16,16 +16,17 @@ import java.util.stream.StreamSupport;
 
 public class TestDataWithinRangeFetcher implements GeoSearchEngineOperation {
 
-    private static final Logger logger= LogManager.getLogger(TestDataFetcher.class);
+    private static final Logger logger = LogManager.getLogger(TestDataFetcher.class);
     private final TestDataRepository testDataRepository;
     private final GeoLocationRepository geoLocationRepository;
     private final Geopoint geopoint;
+
     public TestDataWithinRangeFetcher(TestDataRepository testDataRepository,
                                       GeoLocationRepository geoLocationRepository,
-                                      Geopoint geoPoint){
-        this.testDataRepository=testDataRepository;
-        this.geoLocationRepository=geoLocationRepository;
-        this.geopoint=geoPoint;
+                                      Geopoint geoPoint) {
+        this.testDataRepository = testDataRepository;
+        this.geoLocationRepository = geoLocationRepository;
+        this.geopoint = geoPoint;
 
     }
 
@@ -34,7 +35,7 @@ public class TestDataWithinRangeFetcher implements GeoSearchEngineOperation {
         long startTime = System.currentTimeMillis();
         logger.info(" Latitude::" + geopoint.getLatitude());
         logger.info("Longitude::" + geopoint.getLongitude());
-        Iterable<GeoLocationDB> geoLocations=geoLocationRepository.findWithinXKms(
+        Iterable<GeoLocationDB> geoLocations = geoLocationRepository.findWithinXKms(
                 geopoint.getLatitude(),
                 geopoint.getLongitude(),
                 AppConfiguration.DISTANCE_RANGE
@@ -44,7 +45,7 @@ public class TestDataWithinRangeFetcher implements GeoSearchEngineOperation {
                 .map(GeoLocationDB::getId)
                 .collect(Collectors.toList());
 
-        Iterable<TestDataDB> testDataPoints= testDataRepository.findWithinXKms(locationIDList);
+        Iterable<TestDataDB> testDataPoints = testDataRepository.findWithinXKms(locationIDList);
 
         long timeTaken = System.currentTimeMillis() - startTime;
         logger.info("Time Taken = " + timeTaken);

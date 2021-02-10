@@ -1,7 +1,6 @@
 package com.shyam.GeoSearchEngine.core.geosearchengine.operations;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.shyam.GeoSearchEngine.core.geosearchengine.operations.GeoSearchEngineOperation;
 import com.shyam.GeoSearchEngine.core.geosearchengine.utils.GeoSearchJSONHandler;
 import com.shyam.GeoSearchEngine.repositories.TestDataRepository;
 import org.apache.logging.log4j.LogManager;
@@ -11,11 +10,11 @@ public class TestDataStatsFetcher implements GeoSearchEngineOperation {
 
     private final TestDataRepository testDataRepository;
     private final String name;
-    private final Logger logger= LogManager.getLogger(TestDataUpdator.class);
+    private final Logger logger = LogManager.getLogger(TestDataUpdator.class);
 
-    public TestDataStatsFetcher(TestDataRepository testDataRepository,String name){
-        this.testDataRepository=testDataRepository;
-        this.name=name;
+    public TestDataStatsFetcher(TestDataRepository testDataRepository, String name) {
+        this.testDataRepository = testDataRepository;
+        this.name = name;
     }
 
     @Override
@@ -23,8 +22,9 @@ public class TestDataStatsFetcher implements GeoSearchEngineOperation {
         long startTime = System.currentTimeMillis();
         int exactNameMatch = testDataRepository.findExactNameMatch(name);
         int partialNameMatch = testDataRepository.findPartialNameMatch(name);
-        ObjectNode rootNode= GeoSearchJSONHandler.INSTANCE.createStatsJSON(exactNameMatch,partialNameMatch);
+        ObjectNode rootNode = GeoSearchJSONHandler.INSTANCE.createStatsJSON(exactNameMatch, partialNameMatch);
         long timeTaken = System.currentTimeMillis() - startTime;
         logger.info("Time Taken = " + timeTaken);
-        return rootNode;    }
+        return rootNode;
+    }
 }

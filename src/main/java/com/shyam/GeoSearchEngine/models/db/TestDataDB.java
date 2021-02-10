@@ -2,23 +2,23 @@ package com.shyam.GeoSearchEngine.models.db;
 
 import javax.persistence.*;
 
-@Entity(name="TESTDATA")
+@Entity(name = "TESTDATA")
 public class TestDataDB {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     @Column(name = "location_id")
     private Long location_id;
 
     @ManyToOne
-    @JoinColumn(name="location_id", referencedColumnName = "id",insertable = false, updatable = false)
+    @JoinColumn(name = "location_id", referencedColumnName = "id", insertable = false, updatable = false)
     private GeoLocationDB geoLocation;
 
 
-
-    protected TestDataDB() {}
+    protected TestDataDB() {
+    }
 
     public Long getId() {
         return id;
@@ -53,7 +53,7 @@ public class TestDataDB {
     public String toString() {
         return String.format(
                 "Place[id=%d, name='%s', location='%s',latitude='%f', longitude='%f']",
-                id, name, geoLocation.getLocation(),geoLocation.getLatitude(),geoLocation.getLongitude());
+                id, name, geoLocation.getLocation(), geoLocation.getLatitude(), geoLocation.getLongitude());
     }
 
 }

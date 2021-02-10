@@ -1,15 +1,18 @@
 package com.shyam.GeoSearchEngine.models.db;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Objects;
 
-@Entity(name="GEOLOCATIONS")
+@Entity(name = "GEOLOCATIONS")
 public class GeoLocationDB {
 
 
     @Id
     //@SequenceGenerator(name= "GEO_LOCATION_SEQUENCE", sequenceName = "GEOLOCATIONS_SEQUENCE_ID", initialValue=1, allocationSize = 1)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String location;
     private double latitude;
@@ -68,6 +71,6 @@ public class GeoLocationDB {
 
     @Override
     public int hashCode() {
-        return Objects.hash(location, latitude,longitude,id);
+        return Objects.hash(location, latitude, longitude, id);
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Repository class for test data
  */
-public interface TestDataRepository extends CrudRepository<TestDataDB,Long> {
+public interface TestDataRepository extends CrudRepository<TestDataDB, Long> {
 
 
     TestDataDB findById(long id);
