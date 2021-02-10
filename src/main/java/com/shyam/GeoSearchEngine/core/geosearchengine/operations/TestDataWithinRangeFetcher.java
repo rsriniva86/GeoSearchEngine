@@ -8,6 +8,8 @@ import com.shyam.GeoSearchEngine.models.json.Geopoint;
 import com.shyam.GeoSearchEngine.models.json.TestData;
 import com.shyam.GeoSearchEngine.repositories.GeoLocationRepository;
 import com.shyam.GeoSearchEngine.repositories.TestDataRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +18,7 @@ import java.util.stream.StreamSupport;
 
 public class TestDataWithinRangeFetcher implements GeoSearchEngineOperation {
 
-
+    private static final Logger logger= LogManager.getLogger(TestDataFetcher.class);
     private final TestDataRepository testDataRepository;
     private final GeoLocationRepository geoLocationRepository;
     private final Geopoint geopoint;
@@ -32,8 +34,8 @@ public class TestDataWithinRangeFetcher implements GeoSearchEngineOperation {
     @Override
     public Object doOperation() throws Exception {
         long startTime = System.currentTimeMillis();
-        System.out.println(" Latitude::" + geopoint.getLatitude());
-        System.out.println("Longitude::" + geopoint.getLongitude());
+        logger.info(" Latitude::" + geopoint.getLatitude());
+        logger.info("Longitude::" + geopoint.getLongitude());
         Iterable<DBGeoLocation> geoLocations=geoLocationRepository.findWithinXKms(
                 geopoint.getLatitude(),
                 geopoint.getLongitude(),
@@ -47,14 +49,9 @@ public class TestDataWithinRangeFetcher implements GeoSearchEngineOperation {
         Iterable<TestDataDB> testDataPoints= testDataRepository.findWithinXKms(locationIDList);
 
         long timeTaken = System.currentTimeMillis() - startTime;
-        System.out.println("Time Taken = " + timeTaken);
+        logger.info("Time Taken = " + timeTaken);
         return GeoSearchJSONHandler
                 .INSTANCE
                 .groupByLocation(testDataPoints);
     }
-
-
-
-
-
 }

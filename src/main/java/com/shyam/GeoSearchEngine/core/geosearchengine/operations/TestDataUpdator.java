@@ -10,6 +10,8 @@ import com.shyam.GeoSearchEngine.models.db.TestDataDB;
 import com.shyam.GeoSearchEngine.models.json.TestData;
 import com.shyam.GeoSearchEngine.repositories.GeoLocationRepository;
 import com.shyam.GeoSearchEngine.repositories.TestDataRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,7 +26,7 @@ public class TestDataUpdator implements GeoSearchEngineOperation {
     private final Geolocation geoLocation;
     private final boolean isOverwrite;
 
-
+    private final Logger logger= LogManager.getLogger(TestDataUpdator.class);
     public TestDataUpdator(TestDataRepository testDataRepository,
                            GeoLocationRepository geoLocationRepository,
                            int id,
@@ -81,7 +83,7 @@ public class TestDataUpdator implements GeoSearchEngineOperation {
         List<TestDataDB> testDataPoints=new ArrayList<>();
         testDataPoints.add(testDataDB);
         long timeTaken = System.currentTimeMillis() - startTime;
-        System.out.println("Time Taken = " + timeTaken);
+        logger.info("Time Taken = " + timeTaken);
 
         Map<String, List<TestData>> data=
                 GeoSearchJSONHandler
