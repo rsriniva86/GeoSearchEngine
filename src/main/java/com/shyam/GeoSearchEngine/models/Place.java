@@ -2,10 +2,7 @@ package com.shyam.GeoSearchEngine.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity(name="PLACES")
 public class Place {
@@ -14,18 +11,12 @@ public class Place {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
     private String name;
-    private String location;
-    private double latitude;
-    private double longitude;
+
+    @ManyToOne
+    @JoinColumn(name="location_id", referencedColumnName = "id")
+    private GeoLocation geoLocation;
 
     protected Place() {}
-
-    public Place(String name, String location, double latitude, double longitude) {
-        this.name = name;
-        this.location = location;
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
 
     public Long getId() {
         return id;
@@ -35,32 +26,27 @@ public class Place {
         return name;
     }
 
-    @JsonIgnore
-    public String getLocation() {
-        return location;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public GeoLocation getGeoLocation() {
+        return geoLocation;
     }
 
-    public double getLongitude() {
-        return longitude;
+    public void setGeoLocation(GeoLocation geoLocation) {
+        this.geoLocation = geoLocation;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
+
+
 
     @Override
     public String toString() {
         return String.format(
                 "Place[id=%d, name='%s', location='%s',latitude='%f', longitude='%f']",
-                id, name, location,latitude,longitude);
+                id, name, geoLocation.getLocation(),geoLocation.getLatitude(),geoLocation.getLongitude());
     }
 
 }

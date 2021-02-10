@@ -12,10 +12,10 @@ public class PlacesUpdator {
         System.out.println(" Latitude::" + geoPoint.getLatitude());
         System.out.println("Longitude::" + geoPoint.getLongitude());
         Place place = placesRepository.findById(id);
-        place.setLatitude(geoPoint.getLatitude());
-        place.setLongitude(geoPoint.getLongitude());
+        place.getGeoLocation().setLatitude(geoPoint.getLatitude());
+        place.getGeoLocation().setLongitude(geoPoint.getLongitude());
         placesRepository.save(place);
-        boolean isUpdated = (place.getLatitude() == geoPoint.getLatitude());
+        boolean isUpdated = (place.getGeoLocation().getLatitude() == geoPoint.getLatitude());
         System.out.println("isUpdated? " + isUpdated);
         long timeTaken = System.currentTimeMillis() - startTime;
         System.out.println("Time Taken = " + timeTaken);

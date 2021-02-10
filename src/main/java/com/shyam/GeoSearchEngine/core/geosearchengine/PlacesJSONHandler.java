@@ -33,7 +33,9 @@ public enum PlacesJSONHandler {
         return placeList
                 .stream()
                 .collect(
-                        groupingBy(Place::getLocation)
+                        groupingBy(
+                                place -> place.getGeoLocation().getLocation()
+                        )
                 );
     }
 
