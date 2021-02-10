@@ -14,7 +14,7 @@ public class TestDataDB {
 
     @ManyToOne
     @JoinColumn(name="location_id", referencedColumnName = "id",insertable = false, updatable = false)
-    private DBGeoLocation geoLocation;
+    private GeoLocationDB geoLocation;
 
 
 
@@ -32,11 +32,11 @@ public class TestDataDB {
         this.name = name;
     }
 
-    public DBGeoLocation getGeoLocation() {
+    public GeoLocationDB getGeoLocation() {
         return geoLocation;
     }
 
-    public void setGeoLocation(DBGeoLocation geoLocation) {
+    public void setGeoLocation(GeoLocationDB geoLocation) {
         this.geoLocation = geoLocation;
     }
 

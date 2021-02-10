@@ -1,7 +1,8 @@
 package com.shyam.GeoSearchEngine.core.geosearchengine.operations;
 
-import java.util.Map;
-
+/**
+ * This interface defines the basic contract for doing operations on GeoSearch
+ */
 public interface GeoSearchEngineOperation {
     Object doOperation() throws Exception;
 }

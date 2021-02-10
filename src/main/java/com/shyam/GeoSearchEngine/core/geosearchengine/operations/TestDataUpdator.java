@@ -1,9 +1,7 @@
 package com.shyam.GeoSearchEngine.core.geosearchengine.operations;
 
-import com.shyam.GeoSearchEngine.core.geosearchengine.error.GeoSearchEngineException;
-import com.shyam.GeoSearchEngine.core.geosearchengine.operations.GeoSearchEngineOperation;
 import com.shyam.GeoSearchEngine.core.geosearchengine.utils.GeoSearchJSONHandler;
-import com.shyam.GeoSearchEngine.models.db.DBGeoLocation;
+import com.shyam.GeoSearchEngine.models.db.GeoLocationDB;
 import com.shyam.GeoSearchEngine.models.json.Geolocation;
 import com.shyam.GeoSearchEngine.models.json.Geopoint;
 import com.shyam.GeoSearchEngine.models.db.TestDataDB;
@@ -49,17 +47,17 @@ public class TestDataUpdator implements GeoSearchEngineOperation {
 
         long startTime = System.currentTimeMillis();
         Geopoint geoPoint=geoLocation.getGeopoint();
-        DBGeoLocation dbGeoLocation=
+        GeoLocationDB geoLocationDB =
                 geoLocationRepository.findByLocation(geoLocation.getLocation());
-        if(dbGeoLocation!=null){
+        if(geoLocationDB !=null){
             isExistingLocation=true;
             //If location already exists
             //Do overwrite with new value or keep to old values
             if(isOverwrite) {
-                dbGeoLocation.setLocation(geoLocation.getLocation());
-                dbGeoLocation.setLatitude(geoPoint.getLatitude());
-                dbGeoLocation.setLongitude(geoPoint.getLongitude());
-                geoLocationRepository.save(dbGeoLocation);
+                geoLocationDB.setLocation(geoLocation.getLocation());
+                geoLocationDB.setLatitude(geoPoint.getLatitude());
+                geoLocationDB.setLongitude(geoPoint.getLongitude());
+                geoLocationRepository.save(geoLocationDB);
                 isGeopointOverwritten=true;
             }else {
                 //Do nothing
@@ -68,17 +66,17 @@ public class TestDataUpdator implements GeoSearchEngineOperation {
         }else{
             //location does not exist in GeolocationDB
             isExistingLocation=false;
-            dbGeoLocation
+            geoLocationDB
                     =new
-                    DBGeoLocation(
+                    GeoLocationDB(
                     geoLocation.getLocation(),
                     geoPoint.getLatitude(),
                     geoPoint.getLongitude());
-            geoLocationRepository.save(dbGeoLocation);
+            geoLocationRepository.save(geoLocationDB);
         }
         TestDataDB testDataDB = testDataRepository.findById(id);
-        testDataDB.setLocation_id(dbGeoLocation.getId());
-        testDataDB.setGeoLocation(dbGeoLocation);
+        testDataDB.setLocation_id(geoLocationDB.getId());
+        testDataDB.setGeoLocation(geoLocationDB);
         testDataRepository.save(testDataDB);
         List<TestDataDB> testDataPoints=new ArrayList<>();
         testDataPoints.add(testDataDB);

@@ -7,7 +7,9 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-
+/**
+ * Repository class for test data
+ */
 public interface TestDataRepository extends CrudRepository<TestDataDB,Long> {
 
 

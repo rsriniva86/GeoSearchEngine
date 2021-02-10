@@ -2,17 +2,15 @@ package com.shyam.GeoSearchEngine.core.geosearchengine.operations;
 
 import com.shyam.GeoSearchEngine.core.AppConfiguration;
 import com.shyam.GeoSearchEngine.core.geosearchengine.utils.GeoSearchJSONHandler;
-import com.shyam.GeoSearchEngine.models.db.DBGeoLocation;
+import com.shyam.GeoSearchEngine.models.db.GeoLocationDB;
 import com.shyam.GeoSearchEngine.models.db.TestDataDB;
 import com.shyam.GeoSearchEngine.models.json.Geopoint;
-import com.shyam.GeoSearchEngine.models.json.TestData;
 import com.shyam.GeoSearchEngine.repositories.GeoLocationRepository;
 import com.shyam.GeoSearchEngine.repositories.TestDataRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -36,14 +34,14 @@ public class TestDataWithinRangeFetcher implements GeoSearchEngineOperation {
         long startTime = System.currentTimeMillis();
         logger.info(" Latitude::" + geopoint.getLatitude());
         logger.info("Longitude::" + geopoint.getLongitude());
-        Iterable<DBGeoLocation> geoLocations=geoLocationRepository.findWithinXKms(
+        Iterable<GeoLocationDB> geoLocations=geoLocationRepository.findWithinXKms(
                 geopoint.getLatitude(),
                 geopoint.getLongitude(),
                 AppConfiguration.DISTANCE_RANGE
         );
         List<Long> locationIDList = StreamSupport
                 .stream(geoLocations.spliterator(), false)
-                .map(DBGeoLocation::getId)
+                .map(GeoLocationDB::getId)
                 .collect(Collectors.toList());
 
         Iterable<TestDataDB> testDataPoints= testDataRepository.findWithinXKms(locationIDList);

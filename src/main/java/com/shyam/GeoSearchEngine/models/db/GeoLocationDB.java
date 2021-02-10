@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity(name="GEOLOCATIONS")
-public class DBGeoLocation {
+public class GeoLocationDB {
 
 
     @Id
@@ -15,10 +15,10 @@ public class DBGeoLocation {
     private double latitude;
     private double longitude;
 
-    public DBGeoLocation() {
+    public GeoLocationDB() {
     }
 
-    public DBGeoLocation(String location, double latitude, double longitude) {
+    public GeoLocationDB(String location, double latitude, double longitude) {
         this.location = location;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -54,11 +54,11 @@ public class DBGeoLocation {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof DBGeoLocation)) {
+        if (!(obj instanceof GeoLocationDB)) {
             return false;
         }
 
-        DBGeoLocation that = (DBGeoLocation) obj;
+        GeoLocationDB that = (GeoLocationDB) obj;
 
         return Objects.equals(this.location, that.location)
                 && Objects.equals(this.latitude, that.latitude)
