@@ -2,8 +2,8 @@ package com.shyam.GeoSearchEngine.models.db;
 
 import javax.persistence.*;
 
-@Entity(name="PLACES")
-public class DBPlace {
+@Entity(name="TESTDATA")
+public class TestDataDB {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -18,7 +18,7 @@ public class DBPlace {
 
 
 
-    protected DBPlace() {}
+    protected TestDataDB() {}
 
     public Long getId() {
         return id;

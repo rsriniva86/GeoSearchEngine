@@ -3,21 +3,21 @@ package com.shyam.GeoSearchEngine.core.geosearchengine;
 import com.shyam.GeoSearchEngine.models.db.DBGeoLocation;
 import com.shyam.GeoSearchEngine.models.json.Geolocation;
 import com.shyam.GeoSearchEngine.models.json.Geopoint;
-import com.shyam.GeoSearchEngine.models.db.DBPlace;
+import com.shyam.GeoSearchEngine.models.db.TestDataDB;
 import com.shyam.GeoSearchEngine.models.json.TestData;
 import com.shyam.GeoSearchEngine.repositories.GeoLocationRepository;
-import com.shyam.GeoSearchEngine.repositories.PlacesRepository;
+import com.shyam.GeoSearchEngine.repositories.TestDataRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class PlacesUpdator {
-    public Map<String, List<TestData>> update(PlacesRepository placesRepository,
-                          GeoLocationRepository geoLocationRepository,
-                          int id,
-                          Geolocation geoLocation,
-                          boolean isOverwrite) {
+public class TestDataUpdator {
+    public Map<String, List<TestData>> update(TestDataRepository testDataRepository,
+                                              GeoLocationRepository geoLocationRepository,
+                                              int id,
+                                              Geolocation geoLocation,
+                                              boolean isOverwrite) {
 
         long startTime = System.currentTimeMillis();
         Geopoint geoPoint=geoLocation.getGeopoint();
@@ -45,19 +45,19 @@ public class PlacesUpdator {
             geoLocationRepository.save(dbGeoLocation);
 
         }
-        DBPlace DBPlace = placesRepository.findById(id);
-        DBPlace.setLocation_id(dbGeoLocation.getId());
-        placesRepository.save(DBPlace);
+        TestDataDB TestDataDB = testDataRepository.findById(id);
+        TestDataDB.setLocation_id(dbGeoLocation.getId());
+        testDataRepository.save(TestDataDB);
         long timeTaken = System.currentTimeMillis() - startTime;
         System.out.println("Time Taken = " + timeTaken);
 
-        List<DBPlace> places=new ArrayList<DBPlace>();
-        places.add(DBPlace);
+        List<TestDataDB> testDataPoints=new ArrayList<TestDataDB>();
+        testDataPoints.add(TestDataDB);
 
         return
-                PlacesJSONHandler
+                GeoSearchJSONHandler
                         .INSTANCE
-                        .groupPlacesByLocation(places);
+                        .groupByLocation(testDataPoints);
 
     }
 }

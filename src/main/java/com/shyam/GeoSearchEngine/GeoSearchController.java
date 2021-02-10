@@ -1,14 +1,14 @@
 package com.shyam.GeoSearchEngine;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.shyam.GeoSearchEngine.core.geosearchengine.PlacesFetcher;
-import com.shyam.GeoSearchEngine.core.geosearchengine.PlacesStatsFetcher;
-import com.shyam.GeoSearchEngine.core.geosearchengine.PlacesUpdator;
+import com.shyam.GeoSearchEngine.core.geosearchengine.TestDataFetcher;
+import com.shyam.GeoSearchEngine.core.geosearchengine.TestDataStatsFetcher;
+import com.shyam.GeoSearchEngine.core.geosearchengine.TestDataUpdator;
 import com.shyam.GeoSearchEngine.models.json.Geolocation;
 import com.shyam.GeoSearchEngine.models.json.Geopoint;
 import com.shyam.GeoSearchEngine.models.json.TestData;
 import com.shyam.GeoSearchEngine.repositories.GeoLocationRepository;
-import com.shyam.GeoSearchEngine.repositories.PlacesRepository;
+import com.shyam.GeoSearchEngine.repositories.TestDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,41 +20,41 @@ import java.util.Map;
 public class GeoSearchController {
 
     @Autowired
-    private PlacesRepository placesRepository;
+    private TestDataRepository testDataRepository;
     @Autowired
     private GeoLocationRepository geoLocationRepository;
 
-    @GetMapping("places")
-    public Map<String, List<TestData>> getPlaces() throws Exception {
-        PlacesFetcher fetcher = new PlacesFetcher();
-        return fetcher.get(placesRepository);
+    @GetMapping("data")
+    public Map<String, List<TestData>> getData() throws Exception {
+        TestDataFetcher fetcher = new TestDataFetcher();
+        return fetcher.get(testDataRepository);
     }
 
-    @PostMapping("places/search")
-    public @ResponseBody Map<String, List<TestData>> searchPlacesWithinDistance(@RequestBody Geopoint geoPoint) throws Exception {
-        PlacesFetcher fetcher = new PlacesFetcher();
-        return fetcher.get(placesRepository, geoLocationRepository,geoPoint);
+    @PostMapping("data/search")
+    public @ResponseBody Map<String, List<TestData>> searchDataWithinDistance(@RequestBody Geopoint geoPoint) throws Exception {
+        TestDataFetcher fetcher = new TestDataFetcher();
+        return fetcher.get(testDataRepository, geoLocationRepository,geoPoint);
     }
 
-    @GetMapping("places/stats")
+    @GetMapping("data/stats")
     public ObjectNode nameStats(@RequestParam String name) throws Exception {
-        PlacesStatsFetcher fetcher = new PlacesStatsFetcher();
-        return fetcher.get(placesRepository, name);
+        TestDataStatsFetcher fetcher = new TestDataStatsFetcher();
+        return fetcher.get(testDataRepository, name);
     }
 
-    @PutMapping("/places/{id}")
+    @PutMapping("/data/{id}")
     public @ResponseBody
-    Map<String, List<TestData>> updateGeoPointForPlaces(@PathVariable int id,
-                                    @RequestBody Geolocation geoLocation) throws Exception {
-        PlacesUpdator placesUpdator = new PlacesUpdator();
-        return placesUpdator.update(placesRepository, geoLocationRepository,id, geoLocation, false);
+    Map<String, List<TestData>> updateGeoPointForData(@PathVariable int id,
+                                                      @RequestBody Geolocation geoLocation) throws Exception {
+        TestDataUpdator testDataUpdator = new TestDataUpdator();
+        return testDataUpdator.update(testDataRepository, geoLocationRepository,id, geoLocation, false);
     }
-    @PutMapping("/places/{id}/overwrite")
+    @PutMapping("/data/{id}/overwrite")
     public @ResponseBody
-    Map<String, List<TestData>> updateGeoPointForPlacesOverwrite(@PathVariable int id,
-                                             @RequestBody Geolocation geoLocation) throws Exception {
-        PlacesUpdator placesUpdator = new PlacesUpdator();
-        return placesUpdator.update(placesRepository, geoLocationRepository,id, geoLocation,true);
+    Map<String, List<TestData>> updateGeoPointForDataOverwrite(@PathVariable int id,
+                                                               @RequestBody Geolocation geoLocation) throws Exception {
+        TestDataUpdator testDataUpdator = new TestDataUpdator();
+        return testDataUpdator.update(testDataRepository, geoLocationRepository,id, geoLocation,true);
     }
 
 }
