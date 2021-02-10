@@ -4,8 +4,8 @@ INSERT INTO GEOLOCATIONS (location, latitude,longitude) VALUES
   ('ARC', 1.2969133990837274, 103.78782071290127);
 
   INSERT INTO PLACES (name,location_id) VALUES
-  ('Test1',1),
-  ('Test2',2),
-  ('Test3',3),
-  ('Test3',1),
-  ('Test34',1);
+  ('Test1',SELECT gl.id FROM GEOLOCATIONS gl WHERE location = '21CNR'),
+  ('Test2',SELECT gl.id FROM GEOLOCATIONS gl WHERE location = '28CNR'),
+  ('Test3',SELECT gl.id FROM GEOLOCATIONS gl WHERE location = 'ARC'),
+  ('Test3',SELECT gl.id FROM GEOLOCATIONS gl WHERE location = '21CNR'),
+  ('Test34',SELECT gl.id FROM GEOLOCATIONS gl WHERE location = '21CNR');

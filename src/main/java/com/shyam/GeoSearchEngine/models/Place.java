@@ -11,10 +11,14 @@ public class Place {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
     private String name;
+    @Column(name = "location_id", insertable = false, updatable = false)
+    private Long location_id;
 
     @ManyToOne
     @JoinColumn(name="location_id", referencedColumnName = "id")
     private GeoLocation geoLocation;
+
+
 
     protected Place() {}
 
@@ -39,8 +43,13 @@ public class Place {
     }
 
 
+    public Long getLocation_id() {
+        return location_id;
+    }
 
-
+    public void setLocation_id(Long location_id) {
+        this.location_id = location_id;
+    }
 
     @Override
     public String toString() {

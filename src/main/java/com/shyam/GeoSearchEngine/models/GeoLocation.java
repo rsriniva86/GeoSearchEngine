@@ -9,12 +9,16 @@ import java.util.Objects;
 @Entity(name="GEOLOCATIONS")
 public class GeoLocation {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String location;
     private double latitude;
     private double longitude;
+
+    public GeoLocation() {
+    }
 
     public GeoLocation(String location, double latitude, double longitude) {
         this.location = location;

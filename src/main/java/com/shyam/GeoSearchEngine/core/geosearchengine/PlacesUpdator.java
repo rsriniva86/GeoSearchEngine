@@ -9,7 +9,8 @@ public class PlacesUpdator {
 
         long startTime = System.currentTimeMillis();
         System.out.println("id::" + id);
-        System.out.println(" Latitude::" + geoPoint.getLatitude());
+
+        System.out.println("Latitude::" + geoPoint.getLatitude());
         System.out.println("Longitude::" + geoPoint.getLongitude());
         Place place = placesRepository.findById(id);
         place.getGeoLocation().setLatitude(geoPoint.getLatitude());
