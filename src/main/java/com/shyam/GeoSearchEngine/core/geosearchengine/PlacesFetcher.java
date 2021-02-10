@@ -15,21 +15,19 @@ import java.util.stream.StreamSupport;
 
 public class PlacesFetcher {
 
-    public String get(final PlacesRepository placesRepository)  {
+    public Map<String, List<TestData>> get(final PlacesRepository placesRepository)  {
         long startTime = System.currentTimeMillis();
         Iterable<DBPlace> places = placesRepository.findAll();
         long timeTaken = System.currentTimeMillis() - startTime;
         System.out.println("Time Taken = " + timeTaken);
-        Map<String, List<TestData>> placesByLocation =
+        return
                 PlacesJSONHandler
                         .INSTANCE
                         .groupPlacesByLocation(places);
-        return PlacesJSONHandler
-                .INSTANCE
-                .convertPlacesByLocationToJSON(placesByLocation);
+
     }
 
-    public String get(PlacesRepository placesRepository, GeoLocationRepository geoLocationRepository,GeoPoint geoPoint) {
+    public Map<String, List<TestData>> get(PlacesRepository placesRepository, GeoLocationRepository geoLocationRepository,GeoPoint geoPoint) {
         long startTime = System.currentTimeMillis();
         System.out.println(" Latitude::" + geoPoint.getLatitude());
         System.out.println("Longitude::" + geoPoint.getLongitude());
@@ -47,9 +45,9 @@ public class PlacesFetcher {
 
         long timeTaken = System.currentTimeMillis() - startTime;
         System.out.println("Time Taken = " + timeTaken);
-        Map<String, List<TestData>> placesByLocation = PlacesJSONHandler
+        return PlacesJSONHandler
                 .INSTANCE
                 .groupPlacesByLocation(places);
-        return PlacesJSONHandler.INSTANCE.convertPlacesByLocationToJSON(placesByLocation);
+
     }
 }

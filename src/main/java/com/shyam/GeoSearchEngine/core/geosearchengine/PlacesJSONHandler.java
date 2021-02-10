@@ -17,6 +17,7 @@ import static java.util.stream.Collectors.groupingBy;
 public enum PlacesJSONHandler {
     INSTANCE;
 
+
     public String convertPlacesByLocationToJSON(Map<String, List<TestData>> placesByLocation) {
         final ObjectMapper mapper = new ObjectMapper();
         try {

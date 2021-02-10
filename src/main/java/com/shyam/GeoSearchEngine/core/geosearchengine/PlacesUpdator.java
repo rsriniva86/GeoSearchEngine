@@ -4,11 +4,16 @@ import com.shyam.GeoSearchEngine.models.db.DBGeoLocation;
 import com.shyam.GeoSearchEngine.models.json.GeoLocation;
 import com.shyam.GeoSearchEngine.models.json.GeoPoint;
 import com.shyam.GeoSearchEngine.models.db.DBPlace;
+import com.shyam.GeoSearchEngine.models.json.TestData;
 import com.shyam.GeoSearchEngine.repositories.GeoLocationRepository;
 import com.shyam.GeoSearchEngine.repositories.PlacesRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public class PlacesUpdator {
-    public DBPlace update(PlacesRepository placesRepository,
+    public Map<String, List<TestData>> update(PlacesRepository placesRepository,
                           GeoLocationRepository geoLocationRepository,
                           int id,
                           GeoLocation geoLocation,
@@ -45,6 +50,14 @@ public class PlacesUpdator {
         placesRepository.save(DBPlace);
         long timeTaken = System.currentTimeMillis() - startTime;
         System.out.println("Time Taken = " + timeTaken);
-        return DBPlace;
+
+        List<DBPlace> places=new ArrayList<DBPlace>();
+        places.add(DBPlace);
+
+        return
+                PlacesJSONHandler
+                        .INSTANCE
+                        .groupPlacesByLocation(places);
+
     }
 }

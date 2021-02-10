@@ -7,13 +7,13 @@ public class TestData {
     private String name;
     @JsonIgnore
     private String location;
-    private GeoPoint geoPoint;
+    private GeoPoint geopoint;
 
-    public TestData(long id, String name, String location, GeoPoint geoPoint) {
+    public TestData(long id, String name, String location, GeoPoint geopoint) {
         this.id = id;
         this.name = name;
         this.location = location;
-        this.geoPoint = geoPoint;
+        this.geopoint = geopoint;
     }
 
     public long getId() {
@@ -40,11 +40,11 @@ public class TestData {
         this.location = location;
     }
 
-    public GeoPoint getGeoPoint() {
-        return geoPoint;
+    public GeoPoint getGeopoint() {
+        return geopoint;
     }
 
-    public void setGeoPoint(GeoPoint geoPoint) {
-        this.geoPoint = geoPoint;
+    public void setGeopoint(GeoPoint geopoint) {
+        this.geopoint = geopoint;
     }
 }

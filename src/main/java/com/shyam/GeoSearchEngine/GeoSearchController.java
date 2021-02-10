@@ -6,10 +6,14 @@ import com.shyam.GeoSearchEngine.core.geosearchengine.PlacesUpdator;
 import com.shyam.GeoSearchEngine.models.json.GeoLocation;
 import com.shyam.GeoSearchEngine.models.json.GeoPoint;
 import com.shyam.GeoSearchEngine.models.db.DBPlace;
+import com.shyam.GeoSearchEngine.models.json.TestData;
 import com.shyam.GeoSearchEngine.repositories.GeoLocationRepository;
 import com.shyam.GeoSearchEngine.repositories.PlacesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/geoSearch")
@@ -21,13 +25,13 @@ public class GeoSearchController {
     private GeoLocationRepository geoLocationRepository;
 
     @GetMapping("places")
-    public String getPlaces() throws Exception {
+    public Map<String, List<TestData>> getPlaces() throws Exception {
         PlacesFetcher fetcher = new PlacesFetcher();
         return fetcher.get(placesRepository);
     }
 
     @PostMapping("places/search")
-    public @ResponseBody String searchPlacesWithinDistance(@RequestBody GeoPoint geoPoint) throws Exception {
+    public @ResponseBody Map<String, List<TestData>> searchPlacesWithinDistance(@RequestBody GeoPoint geoPoint) throws Exception {
         PlacesFetcher fetcher = new PlacesFetcher();
         return fetcher.get(placesRepository, geoLocationRepository,geoPoint);
     }
@@ -40,14 +44,14 @@ public class GeoSearchController {
 
     @PutMapping("/places/{id}")
     public @ResponseBody
-    DBPlace updateGeoPointForPlaces(@PathVariable int id,
+    Map<String, List<TestData>> updateGeoPointForPlaces(@PathVariable int id,
                                     @RequestBody GeoLocation geoLocation) throws Exception {
         PlacesUpdator placesUpdator = new PlacesUpdator();
         return placesUpdator.update(placesRepository, geoLocationRepository,id, geoLocation, false);
     }
     @PutMapping("/places/{id}/overwrite")
     public @ResponseBody
-    DBPlace updateGeoPointForPlacesOverwrite(@PathVariable int id,
+    Map<String, List<TestData>> updateGeoPointForPlacesOverwrite(@PathVariable int id,
                                              @RequestBody GeoLocation geoLocation) throws Exception {
         PlacesUpdator placesUpdator = new PlacesUpdator();
         return placesUpdator.update(placesRepository, geoLocationRepository,id, geoLocation,true);
