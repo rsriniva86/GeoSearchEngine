@@ -17,7 +17,7 @@ public class TestDataUpdator {
                                               GeoLocationRepository geoLocationRepository,
                                               int id,
                                               Geolocation geoLocation,
-                                              boolean isOverwrite) {
+                                              boolean isOverwrite) throws GeoSearchEngineException{
 
         long startTime = System.currentTimeMillis();
         Geopoint geoPoint=geoLocation.getGeopoint();
@@ -33,6 +33,7 @@ public class TestDataUpdator {
                 geoLocationRepository.save(dbGeoLocation);
             }else {
                 //Do nothing
+                throw new GeoSearchEngineException(GeoSearchEngineErrorCode.UPDATE_ERROR_LOCATION_EXISTS,"Data already exists for location name. If needed, do in overwrite mode");
             }
         }else{
             //location does not exist in GeolocationDB

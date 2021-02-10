@@ -1,9 +1,7 @@
 package com.shyam.GeoSearchEngine;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.shyam.GeoSearchEngine.core.geosearchengine.TestDataFetcher;
-import com.shyam.GeoSearchEngine.core.geosearchengine.TestDataStatsFetcher;
-import com.shyam.GeoSearchEngine.core.geosearchengine.TestDataUpdator;
+import com.shyam.GeoSearchEngine.core.geosearchengine.*;
 import com.shyam.GeoSearchEngine.models.json.Geolocation;
 import com.shyam.GeoSearchEngine.models.json.Geopoint;
 import com.shyam.GeoSearchEngine.models.json.TestData;
@@ -12,6 +10,7 @@ import com.shyam.GeoSearchEngine.repositories.TestDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,36 +24,67 @@ public class GeoSearchController {
     private GeoLocationRepository geoLocationRepository;
 
     @GetMapping("data")
-    public Map<String, List<TestData>> getData() throws Exception {
+    public Map<String, Object> getData() throws Exception {
         TestDataFetcher fetcher = new TestDataFetcher();
-        return fetcher.get(testDataRepository);
+        Map<String,Object> returnMap=new HashMap<String,Object>();
+        returnMap.put("success",true);
+        returnMap.put("content",fetcher.get(testDataRepository));
+        return returnMap;
     }
 
     @PostMapping("data/search")
-    public @ResponseBody Map<String, List<TestData>> searchDataWithinDistance(@RequestBody Geopoint geoPoint) throws Exception {
+    public @ResponseBody Map<String, Object> searchDataWithinDistance(@RequestBody Geopoint geoPoint) throws Exception {
         TestDataFetcher fetcher = new TestDataFetcher();
-        return fetcher.get(testDataRepository, geoLocationRepository,geoPoint);
+        Map<String,Object> returnMap=new HashMap<String,Object>();
+        returnMap.put("success",true);
+        returnMap.put("content",fetcher.get(testDataRepository, geoLocationRepository,geoPoint));
+        return returnMap;
     }
 
     @GetMapping("data/stats")
-    public ObjectNode nameStats(@RequestParam String name) throws Exception {
+    public Map<String, Object> nameStats(@RequestParam String name) throws Exception {
         TestDataStatsFetcher fetcher = new TestDataStatsFetcher();
-        return fetcher.get(testDataRepository, name);
+        Map<String,Object> returnMap=new HashMap<String,Object>();
+        returnMap.put("success",true);
+        returnMap.put("content",fetcher.get(testDataRepository, name));
+        return returnMap;
     }
 
     @PutMapping("/data/{id}")
     public @ResponseBody
-    Map<String, List<TestData>> updateGeoPointForData(@PathVariable int id,
-                                                      @RequestBody Geolocation geoLocation) throws Exception {
+    Map<String, Object> updateGeoPointForData(@PathVariable int id,
+                                                      @RequestBody Geolocation geoLocation)  {
         TestDataUpdator testDataUpdator = new TestDataUpdator();
-        return testDataUpdator.update(testDataRepository, geoLocationRepository,id, geoLocation, false);
+        Map<String,Object> returnMap=new HashMap<String,Object>();
+        returnMap.put("success",true);
+        try {
+            returnMap.put("content",
+                    testDataUpdator.update(testDataRepository,
+                            geoLocationRepository,
+                            id,
+                            geoLocation,
+                            false));
+        }catch (GeoSearchEngineException e) {
+            returnMap.put("success",false);
+            returnMap.put("error",new GeoSearchEngineError(e.getCode().name(),e.getMessage()));
+        }
+
+        catch (Exception e) {
+            returnMap.put("success",false);
+            returnMap.put("error",new GeoSearchEngineError(GeoSearchEngineErrorCode.GENERIC.name(),e.getMessage()));
+        }
+        return returnMap;
     }
     @PutMapping("/data/{id}/overwrite")
     public @ResponseBody
-    Map<String, List<TestData>> updateGeoPointForDataOverwrite(@PathVariable int id,
+    Map<String, Object> updateGeoPointForDataOverwrite(@PathVariable int id,
                                                                @RequestBody Geolocation geoLocation) throws Exception {
         TestDataUpdator testDataUpdator = new TestDataUpdator();
-        return testDataUpdator.update(testDataRepository, geoLocationRepository,id, geoLocation,true);
+        Map<String,Object> returnMap=new HashMap<String,Object>();
+        returnMap.put("success",true);
+        returnMap.put("content",testDataUpdator.update(testDataRepository, geoLocationRepository,id, geoLocation,true));
+        return returnMap;
+
     }
 
 }
