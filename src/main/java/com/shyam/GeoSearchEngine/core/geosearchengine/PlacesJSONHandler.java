@@ -3,7 +3,7 @@ package com.shyam.GeoSearchEngine.core.geosearchengine;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.shyam.GeoSearchEngine.models.db.Place;
+import com.shyam.GeoSearchEngine.models.db.DBPlace;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +15,7 @@ import static java.util.stream.Collectors.groupingBy;
 public enum PlacesJSONHandler {
     INSTANCE;
 
-    public String convertPlacesByLocationToJSON(Map<String, List<Place>> placesByLocation) {
+    public String convertPlacesByLocationToJSON(Map<String, List<DBPlace>> placesByLocation) {
         final ObjectMapper mapper = new ObjectMapper();
         try {
             return mapper.writeValueAsString(placesByLocation);
@@ -25,12 +25,12 @@ public enum PlacesJSONHandler {
         return "";
     }
 
-    public Map<String, List<Place>> groupPlacesByLocation(Iterable<Place> places) {
-        List<Place> placeList = StreamSupport
+    public Map<String, List<DBPlace>> groupPlacesByLocation(Iterable<DBPlace> places) {
+        List<DBPlace> DBPlaceList = StreamSupport
                 .stream(places.spliterator(), false)
                 .collect(Collectors.toList());
 
-        return placeList
+        return DBPlaceList
                 .stream()
                 .collect(
                         groupingBy(

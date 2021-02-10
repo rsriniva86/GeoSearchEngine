@@ -5,7 +5,7 @@ import com.shyam.GeoSearchEngine.core.geosearchengine.PlacesStatsFetcher;
 import com.shyam.GeoSearchEngine.core.geosearchengine.PlacesUpdator;
 import com.shyam.GeoSearchEngine.models.json.GeoLocation;
 import com.shyam.GeoSearchEngine.models.json.GeoPoint;
-import com.shyam.GeoSearchEngine.models.db.Place;
+import com.shyam.GeoSearchEngine.models.db.DBPlace;
 import com.shyam.GeoSearchEngine.repositories.GeoLocationRepository;
 import com.shyam.GeoSearchEngine.repositories.PlacesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,15 +40,15 @@ public class GeoSearchController {
 
     @PutMapping("/places/{id}")
     public @ResponseBody
-    Place updateGeoPointForPlaces(@PathVariable int id,
-                                  @RequestBody GeoLocation geoLocation) throws Exception {
+    DBPlace updateGeoPointForPlaces(@PathVariable int id,
+                                    @RequestBody GeoLocation geoLocation) throws Exception {
         PlacesUpdator placesUpdator = new PlacesUpdator();
         return placesUpdator.update(placesRepository, geoLocationRepository,id, geoLocation, false);
     }
     @PutMapping("/places/{id}/overwrite")
     public @ResponseBody
-    Place updateGeoPointForPlacesOverwrite(@PathVariable int id,
-                                  @RequestBody GeoLocation geoLocation) throws Exception {
+    DBPlace updateGeoPointForPlacesOverwrite(@PathVariable int id,
+                                             @RequestBody GeoLocation geoLocation) throws Exception {
         PlacesUpdator placesUpdator = new PlacesUpdator();
         return placesUpdator.update(placesRepository, geoLocationRepository,id, geoLocation,true);
     }

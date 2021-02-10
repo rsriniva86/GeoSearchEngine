@@ -1,11 +1,9 @@
 package com.shyam.GeoSearchEngine.models.db;
 
-import com.shyam.GeoSearchEngine.models.db.GeoLocation;
-
 import javax.persistence.*;
 
 @Entity(name="PLACES")
-public class Place {
+public class DBPlace {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -16,11 +14,11 @@ public class Place {
 
     @ManyToOne
     @JoinColumn(name="location_id", referencedColumnName = "id",insertable = false, updatable = false)
-    private GeoLocation geoLocation;
+    private DBGeoLocation geoLocation;
 
 
 
-    protected Place() {}
+    protected DBPlace() {}
 
     public Long getId() {
         return id;
@@ -34,11 +32,11 @@ public class Place {
         this.name = name;
     }
 
-    public GeoLocation getGeoLocation() {
+    public DBGeoLocation getGeoLocation() {
         return geoLocation;
     }
 
-    public void setGeoLocation(GeoLocation geoLocation) {
+    public void setGeoLocation(DBGeoLocation geoLocation) {
         this.geoLocation = geoLocation;
     }
 
