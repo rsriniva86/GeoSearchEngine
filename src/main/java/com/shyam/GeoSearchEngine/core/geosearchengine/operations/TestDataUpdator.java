@@ -1,4 +1,4 @@
-package com.shyam.GeoSearchEngine.core.geosearchengine;
+package com.shyam.GeoSearchEngine.core.geosearchengine.operations;
 
 import com.shyam.GeoSearchEngine.core.geosearchengine.error.GeoSearchEngineException;
 import com.shyam.GeoSearchEngine.core.geosearchengine.operations.GeoSearchEngineOperation;

@@ -1,10 +1,7 @@
 package com.shyam.GeoSearchEngine;
 
 import com.shyam.GeoSearchEngine.core.geosearchengine.*;
-import com.shyam.GeoSearchEngine.core.geosearchengine.operations.GeoSearchEngineOperation;
-import com.shyam.GeoSearchEngine.core.geosearchengine.operations.TestDataFetcher;
-import com.shyam.GeoSearchEngine.core.geosearchengine.operations.TestDataStatsFetcher;
-import com.shyam.GeoSearchEngine.core.geosearchengine.operations.TestDataWithinRangeFetcher;
+import com.shyam.GeoSearchEngine.core.geosearchengine.operations.*;
 import com.shyam.GeoSearchEngine.models.json.Geolocation;
 import com.shyam.GeoSearchEngine.models.json.Geopoint;
 import com.shyam.GeoSearchEngine.repositories.GeoLocationRepository;
