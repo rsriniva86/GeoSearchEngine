@@ -4,6 +4,7 @@ import com.shyam.GeoSearchEngine.core.AppConfiguration;
 import com.shyam.GeoSearchEngine.models.db.DBGeoLocation;
 import com.shyam.GeoSearchEngine.models.json.GeoPoint;
 import com.shyam.GeoSearchEngine.models.db.DBPlace;
+import com.shyam.GeoSearchEngine.models.json.TestData;
 import com.shyam.GeoSearchEngine.repositories.GeoLocationRepository;
 import com.shyam.GeoSearchEngine.repositories.PlacesRepository;
 
@@ -19,8 +20,13 @@ public class PlacesFetcher {
         Iterable<DBPlace> places = placesRepository.findAll();
         long timeTaken = System.currentTimeMillis() - startTime;
         System.out.println("Time Taken = " + timeTaken);
-        Map<String, List<DBPlace>> placesByLocation = PlacesJSONHandler.INSTANCE.groupPlacesByLocation(places);
-        return PlacesJSONHandler.INSTANCE.convertPlacesByLocationToJSON(placesByLocation);
+        Map<String, List<TestData>> placesByLocation =
+                PlacesJSONHandler
+                        .INSTANCE
+                        .groupPlacesByLocation(places);
+        return PlacesJSONHandler
+                .INSTANCE
+                .convertPlacesByLocationToJSON(placesByLocation);
     }
 
     public String get(PlacesRepository placesRepository, GeoLocationRepository geoLocationRepository,GeoPoint geoPoint) {
@@ -41,7 +47,7 @@ public class PlacesFetcher {
 
         long timeTaken = System.currentTimeMillis() - startTime;
         System.out.println("Time Taken = " + timeTaken);
-        Map<String, List<DBPlace>> placesByLocation = PlacesJSONHandler
+        Map<String, List<TestData>> placesByLocation = PlacesJSONHandler
                 .INSTANCE
                 .groupPlacesByLocation(places);
         return PlacesJSONHandler.INSTANCE.convertPlacesByLocationToJSON(placesByLocation);
