@@ -1,9 +1,9 @@
 package com.shyam.GeoSearchEngine.core.geosearchengine;
 
 import com.shyam.GeoSearchEngine.core.AppConfiguration;
-import com.shyam.GeoSearchEngine.models.GeoLocation;
-import com.shyam.GeoSearchEngine.models.GeoPoint;
-import com.shyam.GeoSearchEngine.models.Place;
+import com.shyam.GeoSearchEngine.models.db.GeoLocation;
+import com.shyam.GeoSearchEngine.models.json.GeoPoint;
+import com.shyam.GeoSearchEngine.models.db.Place;
 import com.shyam.GeoSearchEngine.repositories.GeoLocationRepository;
 import com.shyam.GeoSearchEngine.repositories.PlacesRepository;
 

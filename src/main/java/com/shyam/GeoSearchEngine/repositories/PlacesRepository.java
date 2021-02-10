@@ -1,6 +1,6 @@
 package com.shyam.GeoSearchEngine.repositories;
 
-import com.shyam.GeoSearchEngine.models.Place;
+import com.shyam.GeoSearchEngine.models.db.Place;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

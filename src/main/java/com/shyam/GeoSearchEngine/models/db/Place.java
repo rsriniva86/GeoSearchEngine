@@ -1,6 +1,6 @@
-package com.shyam.GeoSearchEngine.models;
+package com.shyam.GeoSearchEngine.models.db;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.shyam.GeoSearchEngine.models.db.GeoLocation;
 
 import javax.persistence.*;
 
@@ -11,11 +11,11 @@ public class Place {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
     private String name;
-    @Column(name = "location_id", insertable = false, updatable = false)
+    @Column(name = "location_id")
     private Long location_id;
 
     @ManyToOne
-    @JoinColumn(name="location_id", referencedColumnName = "id")
+    @JoinColumn(name="location_id", referencedColumnName = "id",insertable = false, updatable = false)
     private GeoLocation geoLocation;
 
 

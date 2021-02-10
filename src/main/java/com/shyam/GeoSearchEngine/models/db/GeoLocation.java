@@ -1,9 +1,6 @@
-package com.shyam.GeoSearchEngine.models;
+package com.shyam.GeoSearchEngine.models.db;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity(name="GEOLOCATIONS")
@@ -11,7 +8,8 @@ public class GeoLocation {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@SequenceGenerator(name= "GEO_LOCATION_SEQUENCE", sequenceName = "GEOLOCATIONS_SEQUENCE_ID", initialValue=1, allocationSize = 1)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private String location;
     private double latitude;

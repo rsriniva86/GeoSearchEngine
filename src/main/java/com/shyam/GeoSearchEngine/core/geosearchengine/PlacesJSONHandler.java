@@ -3,7 +3,7 @@ package com.shyam.GeoSearchEngine.core.geosearchengine;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.shyam.GeoSearchEngine.models.Place;
+import com.shyam.GeoSearchEngine.models.db.Place;
 
 import java.util.List;
 import java.util.Map;
