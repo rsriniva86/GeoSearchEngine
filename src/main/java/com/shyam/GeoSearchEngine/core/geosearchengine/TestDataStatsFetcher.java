@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.shyam.GeoSearchEngine.repositories.TestDataRepository;
 
 public class TestDataStatsFetcher {
-    public ObjectNode get(final TestDataRepository testDataRepository, final String name) throws JsonProcessingException {
+    public ObjectNode get(final TestDataRepository testDataRepository, final String name)  {
         long startTime = System.currentTimeMillis();
         int exactNameMatch = testDataRepository.findExactNameMatch(name);
         int partialNameMatch = testDataRepository.findPartialNameMatch(name);

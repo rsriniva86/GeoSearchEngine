@@ -9,21 +9,26 @@ import com.shyam.GeoSearchEngine.repositories.GeoLocationRepository;
 import com.shyam.GeoSearchEngine.repositories.TestDataRepository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class TestDataUpdator {
-    public Map<String, List<TestData>> update(TestDataRepository testDataRepository,
+    public Map<String, Object> update(TestDataRepository testDataRepository,
                                               GeoLocationRepository geoLocationRepository,
                                               int id,
                                               Geolocation geoLocation,
                                               boolean isOverwrite) throws GeoSearchEngineException{
+
+        boolean isExistingLocation=false;
+        boolean isGeopointOverwritten=false;
 
         long startTime = System.currentTimeMillis();
         Geopoint geoPoint=geoLocation.getGeopoint();
         DBGeoLocation dbGeoLocation=
                 geoLocationRepository.findByLocation(geoLocation.getLocation());
         if(dbGeoLocation!=null){
+            isExistingLocation=true;
             //If location already exists
             //Do overwrite with new value or keep to old values
             if(isOverwrite) {
@@ -31,12 +36,14 @@ public class TestDataUpdator {
                 dbGeoLocation.setLatitude(geoPoint.getLatitude());
                 dbGeoLocation.setLongitude(geoPoint.getLongitude());
                 geoLocationRepository.save(dbGeoLocation);
+                isGeopointOverwritten=true;
             }else {
                 //Do nothing
-                throw new GeoSearchEngineException(GeoSearchEngineErrorCode.UPDATE_ERROR_LOCATION_EXISTS,"Data already exists for location name. If needed, do in overwrite mode");
+                isGeopointOverwritten=false;
             }
         }else{
             //location does not exist in GeolocationDB
+            isExistingLocation=false;
             dbGeoLocation
                     =new
                     DBGeoLocation(
@@ -44,21 +51,27 @@ public class TestDataUpdator {
                     geoPoint.getLatitude(),
                     geoPoint.getLongitude());
             geoLocationRepository.save(dbGeoLocation);
-
         }
-        TestDataDB TestDataDB = testDataRepository.findById(id);
-        TestDataDB.setLocation_id(dbGeoLocation.getId());
-        testDataRepository.save(TestDataDB);
+        TestDataDB testDataDB = testDataRepository.findById(id);
+        testDataDB.setLocation_id(dbGeoLocation.getId());
+        testDataDB.setGeoLocation(dbGeoLocation);
+        testDataRepository.save(testDataDB);
+        List<TestDataDB> testDataPoints=new ArrayList<>();
+        testDataPoints.add(testDataDB);
         long timeTaken = System.currentTimeMillis() - startTime;
         System.out.println("Time Taken = " + timeTaken);
 
-        List<TestDataDB> testDataPoints=new ArrayList<TestDataDB>();
-        testDataPoints.add(TestDataDB);
-
-        return
+        Map<String, List<TestData>> data=
                 GeoSearchJSONHandler
                         .INSTANCE
                         .groupByLocation(testDataPoints);
+
+        Map<String,Object> updateRecordMap=new HashMap<>();
+        updateRecordMap.put("isExistingLocation",isExistingLocation);
+        updateRecordMap.put("isGeopointOverwritten",isGeopointOverwritten);
+        updateRecordMap.put("data",data);
+
+        return updateRecordMap;
 
     }
 }
