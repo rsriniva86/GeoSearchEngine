@@ -1,5 +1,8 @@
 package com.shyam.geosearchengine.core.engine.operations;
 
+import com.shyam.geosearchengine.core.engine.error.GeoSearchEngineErrorCode;
+import com.shyam.geosearchengine.core.engine.error.GeoSearchEngineException;
+import com.shyam.geosearchengine.core.engine.error.GeoSearchEngineMessages;
 import com.shyam.geosearchengine.core.engine.utils.GeoSearchJSONHandler;
 import com.shyam.geosearchengine.models.GeoInfo;
 import com.shyam.geosearchengine.repositories.GeoInfoRepository;
@@ -21,6 +24,12 @@ public class GeoInfoFetcher implements GeoSearchEngineOperation {
 
     @Override
     public Object doOperation() throws Exception {
+
+        if(geoInfoRepository==null){
+            throw new GeoSearchEngineException(
+                    GeoSearchEngineErrorCode.REPOSITORY_NOT_AVAILABLE,
+                    GeoSearchEngineMessages.REPOSITORY_NOT_AVAILABLE);
+        }
 
         long startTime = System.currentTimeMillis();
         Iterable<GeoInfo> geoInfos = geoInfoRepository.findAll();

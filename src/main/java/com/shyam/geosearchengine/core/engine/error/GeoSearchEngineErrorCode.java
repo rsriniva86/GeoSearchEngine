@@ -1,5 +1,6 @@
 package com.shyam.geosearchengine.core.engine.error;
 
 public enum GeoSearchEngineErrorCode {
-    GENERIC;
+    GENERIC,
+    REPOSITORY_NOT_AVAILABLE;
 }
