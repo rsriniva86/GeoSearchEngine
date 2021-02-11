@@ -55,6 +55,10 @@ public class GeoLocation {
         this.longitude = longitude;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof GeoLocation)) {
