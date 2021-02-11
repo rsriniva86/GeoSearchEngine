@@ -78,7 +78,6 @@ class TestDataFetcherTestSetsService {
         GeoInfo geoInfo =new GeoInfo();
         geoInfo.setId(dataset.getID());
         geoInfo.setName(dataset.getNAME());
-        geoInfo.setLocation_id(dataset.getLOCATION_ID());
         geoInfo.setGeoLocation(new GeoLocation());
         geoInfo.getGeoLocation().setLocation(dataset.getLOCATION());
         geoInfo.getGeoLocation().setLatitude(dataset.getLATITUDE());

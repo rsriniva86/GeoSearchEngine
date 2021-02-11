@@ -2,20 +2,18 @@ package com.shyam.geosearchengine.models;
 
 import javax.persistence.*;
 
-@Entity(name = "TESTDATA")
+@Entity
+@Table(name = "GEOINFOS")
 public class GeoInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    @Column(name = "location_id")
-    private Long locationId;
 
     @ManyToOne
-    @JoinColumn(name = "location_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "location_id", referencedColumnName = "id")
     private GeoLocation geoLocation;
-
 
     public GeoInfo() {
     }
@@ -44,14 +42,6 @@ public class GeoInfo {
         this.geoLocation = geoLocation;
     }
 
-
-    public Long getLocationId() {
-        return locationId;
-    }
-
-    public void setLocationId(Long locationId) {
-        this.locationId = locationId;
-    }
 
     @Override
     public String toString() {

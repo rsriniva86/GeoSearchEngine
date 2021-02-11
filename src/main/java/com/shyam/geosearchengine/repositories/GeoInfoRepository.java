@@ -15,19 +15,19 @@ public interface GeoInfoRepository extends CrudRepository<GeoInfo, Long> {
 
     GeoInfo findById(long id);
 
-    @Query("SELECT p FROM GEOINFO p WHERE LOWER(p.name) = LOWER(:name)")
+    @Query("SELECT p FROM GeoInfo p WHERE LOWER(p.name) = LOWER(:name)")
     List<GeoInfo> find(@Param("name") String name);
 
 
-    @Query("Select p FROM GEOINFO p WHERE p.location_id IN :pLocationIDList")
+    @Query("Select p FROM GeoInfo p WHERE p.geoLocation.id IN :pLocationIDList")
     List<GeoInfo> findWithinXKms(
             @Param("pLocationIDList") List<Long> pLocationIDList
     );
 
-    @Query("SELECT COUNT(*) FROM GEOINFO p WHERE p.name =:pName")
+    @Query("SELECT COUNT(*) FROM GeoInfo p WHERE p.name =:pName")
     int findExactNameMatch(@Param("pName") String pName);
 
-    @Query("SELECT COUNT(*) FROM GEOINFO p WHERE p.name LIKE %:pName%")
+    @Query("SELECT COUNT(*) FROM GeoInfo p WHERE p.name LIKE %:pName%")
     int findPartialNameMatch(@Param("pName") String pName);
 
 }

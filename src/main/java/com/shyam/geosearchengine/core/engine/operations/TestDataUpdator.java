@@ -75,7 +75,6 @@ public class TestDataUpdator implements GeoSearchEngineOperation {
             geoLocationRepository.save(geoLocation);
         }
         GeoInfo geoInfo = geoInfoRepository.findById(id);
-        geoInfo.setLocationId(geoLocation.getId());
         geoInfo.setGeoLocation(geoLocation);
         geoInfoRepository.save(geoInfo);
         List<GeoInfo> geoInfos = new ArrayList<>();
