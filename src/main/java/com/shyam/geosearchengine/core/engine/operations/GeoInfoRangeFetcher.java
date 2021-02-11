@@ -1,7 +1,11 @@
 package com.shyam.geosearchengine.core.engine.operations;
 
 import com.shyam.geosearchengine.core.AppConfiguration;
+import com.shyam.geosearchengine.core.engine.error.GeoSearchEngineErrorCode;
+import com.shyam.geosearchengine.core.engine.error.GeoSearchEngineException;
+import com.shyam.geosearchengine.core.engine.error.GeoSearchEngineMessages;
 import com.shyam.geosearchengine.core.engine.utils.GeoSearchJSONHandler;
+import com.shyam.geosearchengine.core.engine.utils.LatitudeLongitudeValidator;
 import com.shyam.geosearchengine.models.GeoLocation;
 import com.shyam.geosearchengine.models.GeoInfo;
 import com.shyam.geosearchengine.dto.GeopointResponseDto;
@@ -9,6 +13,7 @@ import com.shyam.geosearchengine.repositories.GeoLocationRepository;
 import com.shyam.geosearchengine.repositories.GeoInfoRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,6 +37,26 @@ public class GeoInfoRangeFetcher implements GeoSearchEngineOperation {
 
     @Override
     public Object doOperation() throws Exception {
+        if(null==geoInfoRepository || null==geoLocationRepository){
+            throw new GeoSearchEngineException(
+                    GeoSearchEngineErrorCode.REPOSITORY_NOT_AVAILABLE,
+                    GeoSearchEngineMessages.REPOSITORY_NOT_AVAILABLE);
+        }
+        else if(null==geopointResponseDto){
+            throw new GeoSearchEngineException(
+                    GeoSearchEngineErrorCode.INVALID_INPUT,
+                    GeoSearchEngineMessages.INVALID_INPUT);
+        }
+        else if(!LatitudeLongitudeValidator.INSTANCE.isValidLatitude(geopointResponseDto.getLatitude())) {
+            throw new GeoSearchEngineException(
+                    GeoSearchEngineErrorCode.INVALID_INPUT,
+                    GeoSearchEngineMessages.INVALID_INPUT);
+        }
+        else if(!LatitudeLongitudeValidator.INSTANCE.isValidLongitude(geopointResponseDto.getLongitude())){
+            throw new GeoSearchEngineException(
+                    GeoSearchEngineErrorCode.INVALID_INPUT,
+                    GeoSearchEngineMessages.INVALID_INPUT);
+        }
         long startTime = System.currentTimeMillis();
         logger.info("Latitude::" + geopointResponseDto.getLatitude());
         logger.info("Longitude::" + geopointResponseDto.getLongitude());
