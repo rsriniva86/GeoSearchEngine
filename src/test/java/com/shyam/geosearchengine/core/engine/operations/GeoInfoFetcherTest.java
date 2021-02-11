@@ -1,5 +1,8 @@
 package com.shyam.geosearchengine.core.engine.operations;
 
+import com.shyam.geosearchengine.core.engine.error.GeoSearchEngineErrorCode;
+import com.shyam.geosearchengine.core.engine.error.GeoSearchEngineException;
+import com.shyam.geosearchengine.core.engine.error.GeoSearchEngineMessages;
 import com.shyam.geosearchengine.testutils.TestDataSet;
 import com.shyam.geosearchengine.models.GeoInfo;
 import com.shyam.geosearchengine.dto.GeoInfoResponseDto;
@@ -28,7 +31,7 @@ class GeoInfoFetcherTest {
 
 
     @Test
-    void test001_OperationForEmptyTable() {
+    void test001_EmptyTable() {
         when(geoInfoRepository.findAll()).thenReturn(
           new ArrayList<>()
         );
@@ -43,7 +46,7 @@ class GeoInfoFetcherTest {
         }
     }
     @Test
-    void test002_OperationForSingleEntry() {
+    void test002_SingleEntry() {
         final Iterable<GeoInfo> testDataList= () -> {
             List<GeoInfo> list=new ArrayList<>();
             list.add(createGeoInfoObject(TestDataSet.getTestDataSets().get(0)));
@@ -70,7 +73,7 @@ class GeoInfoFetcherTest {
 
     }
     @Test
-    void test003_OperationForMultipleEntries() {
+    void test003_MultipleEntries() {
         final Iterable<GeoInfo> testDataList= () -> {
             List<GeoInfo> list=new ArrayList<>();
             list.add(createGeoInfoObject(TestDataSet.getTestDataSets().get(0)));
@@ -115,6 +118,30 @@ class GeoInfoFetcherTest {
             e.printStackTrace();
             fail("Exception not expected");
         }
+
+    }
+
+    @Test
+    public void test004_GeoInfoRepositoryNull(){
+        GeoInfoFetcher fetcher = new GeoInfoFetcher(null);
+        try {
+            fetcher.doOperation();
+        }catch (GeoSearchEngineException geoSearchEngineException){
+            assertEquals(
+                    GeoSearchEngineErrorCode.REPOSITORY_NOT_AVAILABLE,
+                    geoSearchEngineException.getCode(), "Error code is not as expected");
+            assertEquals(
+                    GeoSearchEngineMessages.REPOSITORY_NOT_AVAILABLE,
+                    geoSearchEngineException.getMessage(),
+                     "message is not as expected");
+            return;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            fail("exception is NOTexpected");
+        }
+        fail("exception is expected");
+
 
     }
 }
