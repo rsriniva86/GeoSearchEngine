@@ -46,8 +46,10 @@ public class GeoInfoUpdater implements GeoSearchEngineOperation {
     @Override
     public Object doOperation() throws Exception {
 
+        logger.info("Start validations");
         if (null == geoInfoRepository
                 || null == geoLocationRepository) {
+            logger.error(GeoSearchEngineMessages.REPOSITORY_NOT_AVAILABLE);
             throw new GeoSearchEngineException(
                     GeoSearchEngineErrorCode.REPOSITORY_NOT_AVAILABLE,
                     GeoSearchEngineMessages.REPOSITORY_NOT_AVAILABLE);
@@ -57,65 +59,83 @@ public class GeoInfoUpdater implements GeoSearchEngineOperation {
                 || inputGeoLocation.getLocation().isEmpty()
                 || null== inputGeoLocation.getGeopoint()
         ){
+            logger.error(GeoSearchEngineMessages.INVALID_INPUT);
             throw new GeoSearchEngineException(
                     GeoSearchEngineErrorCode.INVALID_INPUT,
                     GeoSearchEngineMessages.INVALID_INPUT);
         }else if(!LatitudeLongitudeValidator
                 .INSTANCE
                 .isValidLatitude(inputGeoLocation.getGeopoint().getLatitude())){
+            logger.error(GeoSearchEngineMessages.INVALID_INPUT_LATITUDE);
             throw new GeoSearchEngineException(
                     GeoSearchEngineErrorCode.INVALID_INPUT,
                     GeoSearchEngineMessages.INVALID_INPUT_LATITUDE);
         }else if(!LatitudeLongitudeValidator
                 .INSTANCE
                 .isValidLongitude(inputGeoLocation.getGeopoint().getLongitude())){
+            logger.error(GeoSearchEngineMessages.INVALID_INPUT_LONGITUDE);
+
             throw new GeoSearchEngineException(
                     GeoSearchEngineErrorCode.INVALID_INPUT,
                     GeoSearchEngineMessages.INVALID_INPUT_LONGITUDE);
         }
-
+        logger.info("End validations");
+        logger.info("Get geo info for ID"+id);
         GeoInfo geoInfo = geoInfoRepository.findById(id);
         if(geoInfo==null){
+            logger.error("geo info is null");
             throw new GeoSearchEngineException(
                     GeoSearchEngineErrorCode.DATA_NOT_EXISTS,
                     GeoSearchEngineMessages.DATA_NOT_EXISTS);
+        }else{
+            logger.info("Geoinfo is not null");
         }
 
         boolean isExistingLocation = false;
-        boolean isGeopointOverwritten = false;
+        boolean isGeolocationOverwritten = false;
 
         long startTime = System.currentTimeMillis();
-        GeopointResponseDto geoPoint = this.inputGeoLocation.getGeopoint();
+        logger.info("getGeoLocation for "+this.inputGeoLocation.getLocation());
         GeoLocation geoLocation =
                 geoLocationRepository.findByLocation(this.inputGeoLocation.getLocation());
         if (geoLocation != null) {
+            logger.info("This is existing location");
             isExistingLocation = true;
             //If location already exists
             //Do overwrite with new value or keep to old values
+            //Take note that the overwrite will not only change the current GeoInfo
+            // but all GeoInfo records with the same GeoLocation
             if (isOverwrite) {
+                logger.info("current policy is overwrite when GeoLocation already exists");
                 geoLocation.setLocation(this.inputGeoLocation.getLocation());
-                geoLocation.setLatitude(geoPoint.getLatitude());
-                geoLocation.setLongitude(geoPoint.getLongitude());
+                geoLocation.setLatitude(this.inputGeoLocation.getGeopoint().getLatitude());
+                geoLocation.setLongitude(this.inputGeoLocation.getGeopoint().getLongitude());
                 geoLocationRepository.save(geoLocation);
-                isGeopointOverwritten = true;
+                logger.info("Geolocation updated to db"+geoLocation.toString());
+                isGeolocationOverwritten = true;
             } else {
                 //Do nothing
-                isGeopointOverwritten = false;
+                isGeolocationOverwritten = false;
+                logger.info("current policy is NOT overwrite when GeoLocation already exists");
+                logger.info("Geolocation in db"+geoLocation.toString());
             }
         } else {
             //location does not exist in GeolocationDB
             isExistingLocation = false;
+            logger.info("This is new location");
             geoLocation
                     = new
                     GeoLocation(
                     this.inputGeoLocation.getLocation(),
-                    geoPoint.getLatitude(),
-                    geoPoint.getLongitude());
+                    this.inputGeoLocation.getGeopoint().getLatitude(),
+                    this.inputGeoLocation.getGeopoint().getLongitude());
             geoLocationRepository.save(geoLocation);
+            logger.info("New Location Saved");
         }
 
         geoInfo.setGeoLocation(geoLocation);
         geoInfoRepository.save(geoInfo);
+        logger.info("GeoInfo updated:"+geoInfo.toString());
         List<GeoInfo> geoInfos = new ArrayList<>();
         geoInfos.add(geoInfo);
         long timeTaken = System.currentTimeMillis() - startTime;
@@ -128,8 +148,9 @@ public class GeoInfoUpdater implements GeoSearchEngineOperation {
 
         Map<String, Object> updateRecordMap = new HashMap<>();
         updateRecordMap.put("isExistingLocation", isExistingLocation);
-        updateRecordMap.put("isGeopointOverwritten", isGeopointOverwritten);
+        updateRecordMap.put("isGeolocationOverwritten", isGeolocationOverwritten);
         updateRecordMap.put("data", data);
+        logger.info(updateRecordMap);
         return updateRecordMap;
     }
 }

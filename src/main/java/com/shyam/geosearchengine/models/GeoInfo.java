@@ -46,7 +46,7 @@ public class GeoInfo {
     @Override
     public String toString() {
         return String.format(
-                "Place[id=%d, name='%s', location='%s',latitude='%f', longitude='%f']",
+                "GeoInfo[id=%d, name='%s', location='%s',latitude='%f', longitude='%f']",
                 id, name, geoLocation.getLocation(), geoLocation.getLatitude(), geoLocation.getLongitude());
     }
 

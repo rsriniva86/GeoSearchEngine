@@ -20,41 +20,61 @@ public class TestDataSet {
         this.locationId = locationId;
     }
 
+    public static List<TestDataSet> getTestDataForUpdate() {
+        List<TestDataSet> list = new ArrayList<>();
+        TestDataSet testDataSet = new TestDataSet(
+                1,
+                "Test1",
+                "21CNR",
+                1.35, 103.97,
+                1);
+
+        list.add(testDataSet);
+        testDataSet = new TestDataSet(
+                6,
+                "Test5",
+                "NewLocation",
+                1.35, 103.97,
+                4);
+        list.add(testDataSet);
+        return list;
+    }
+
     public static List<TestDataSet> getTestDataSets() {
         List<TestDataSet> list = new ArrayList<>();
         TestDataSet testDataSet = new TestDataSet(
                 1,
-                "21CNR",
                 "Test1",
+                "21CNR",
                 1.348737, 103.969044,
                 1);
 
         list.add(testDataSet);
         testDataSet = new TestDataSet(
                 2,
-                "28CNR",
                 "Test2",
+                "28CNR",
                 1.3488196938853985, 103.97052082639239,
                 2);
         list.add(testDataSet);
         testDataSet = new TestDataSet(
                 3,
-                "ARC",
                 "Test3",
+                "ARC",
                 1.2969133990837274, 103.78782071290127,
                 3);
         list.add(testDataSet);
         testDataSet = new TestDataSet(
                 4,
-                "21CNR",
                 "Test3",
+                "21CNR",
                 1.348737, 103.969044,
                 1);
         list.add(testDataSet);
         testDataSet = new TestDataSet(
                 5,
                 "Test34",
-                "Test1",
+                "21CNR",
                 1.348737, 103.969044,
                 1);
         list.add(testDataSet);

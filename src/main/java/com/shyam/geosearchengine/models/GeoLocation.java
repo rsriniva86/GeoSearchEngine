@@ -77,4 +77,14 @@ public class GeoLocation {
     public int hashCode() {
         return Objects.hash(location, latitude, longitude, id);
     }
+
+    @Override
+    public String toString() {
+        return "GeoLocation{" +
+                "id=" + id +
+                ", location='" + location + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                '}';
+    }
 }
