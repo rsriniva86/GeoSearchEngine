@@ -200,7 +200,7 @@ class GeoInfoRangeFetcherTest {
             return;
         } catch (Exception e) {
             e.printStackTrace();
-            fail("exception is NOTexpected");
+            fail("exception is NOT expected");
         }
         fail("exception is expected");
     }
@@ -221,7 +221,7 @@ class GeoInfoRangeFetcherTest {
             return;
         } catch (Exception e) {
             e.printStackTrace();
-            fail("exception is NOTexpected");
+            fail("exception is NOT expected");
         }
         fail("exception is expected");
     }
@@ -245,7 +245,7 @@ class GeoInfoRangeFetcherTest {
             return;
         } catch (Exception e) {
             e.printStackTrace();
-            fail("exception is NOTexpected");
+            fail("exception is NOT expected");
         }
         fail("exception is expected");
     }
@@ -263,13 +263,13 @@ class GeoInfoRangeFetcherTest {
                     GeoSearchEngineErrorCode.INVALID_INPUT,
                     geoSearchEngineException.getCode(), "Error code is not as expected");
             assertEquals(
-                    GeoSearchEngineMessages.INVALID_INPUT,
+                    GeoSearchEngineMessages.INVALID_INPUT_LATITUDE,
                     geoSearchEngineException.getMessage(),
                     "message is not as expected");
             return;
         } catch (Exception e) {
             e.printStackTrace();
-            fail("exception is NOTexpected");
+            fail("exception is NOT expected");
         }
         fail("exception is expected");
     }
@@ -287,7 +287,7 @@ class GeoInfoRangeFetcherTest {
                     GeoSearchEngineErrorCode.INVALID_INPUT,
                     geoSearchEngineException.getCode(), "Error code is not as expected");
             assertEquals(
-                    GeoSearchEngineMessages.INVALID_INPUT,
+                    GeoSearchEngineMessages.INVALID_INPUT_LATITUDE,
                     geoSearchEngineException.getMessage(),
                     "message is not as expected");
             return;
@@ -311,13 +311,13 @@ class GeoInfoRangeFetcherTest {
                     GeoSearchEngineErrorCode.INVALID_INPUT,
                     geoSearchEngineException.getCode(), "Error code is not as expected");
             assertEquals(
-                    GeoSearchEngineMessages.INVALID_INPUT,
+                    GeoSearchEngineMessages.INVALID_INPUT_LONGITUDE,
                     geoSearchEngineException.getMessage(),
                     "message is not as expected");
             return;
         } catch (Exception e) {
             e.printStackTrace();
-            fail("exception is NOTexpected");
+            fail("exception is NOT expected");
         }
         fail("exception is expected");
     }
@@ -335,13 +335,13 @@ class GeoInfoRangeFetcherTest {
                     GeoSearchEngineErrorCode.INVALID_INPUT,
                     geoSearchEngineException.getCode(), "Error code is not as expected");
             assertEquals(
-                    GeoSearchEngineMessages.INVALID_INPUT,
+                    GeoSearchEngineMessages.INVALID_INPUT_LONGITUDE,
                     geoSearchEngineException.getMessage(),
                     "message is not as expected");
             return;
         } catch (Exception e) {
             e.printStackTrace();
-            fail("exception is NOTexpected");
+            fail("exception is NOT expected");
         }
         fail("exception is expected");
     }

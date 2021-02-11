@@ -43,7 +43,7 @@ public class GeoSearchController {
     public @ResponseBody
     Map<String, Object> updateGeoPointForData(@PathVariable int id,
                                               @RequestBody GeoLocationResponseDto geoLocation) {
-        GeoSearchEngineOperation operation = new GeoInfoUpdator(geoInfoRepository,
+        GeoSearchEngineOperation operation = new GeoInfoUpdater(geoInfoRepository,
                 geoLocationRepository,
                 id,
                 geoLocation);

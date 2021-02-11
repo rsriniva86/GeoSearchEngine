@@ -47,11 +47,11 @@ public class GeoInfoRangeFetcher implements GeoSearchEngineOperation {
         } else if (!LatitudeLongitudeValidator.INSTANCE.isValidLatitude(geopointResponseDto.getLatitude())) {
             throw new GeoSearchEngineException(
                     GeoSearchEngineErrorCode.INVALID_INPUT,
-                    GeoSearchEngineMessages.INVALID_INPUT);
+                    GeoSearchEngineMessages.INVALID_INPUT_LATITUDE);
         } else if (!LatitudeLongitudeValidator.INSTANCE.isValidLongitude(geopointResponseDto.getLongitude())) {
             throw new GeoSearchEngineException(
                     GeoSearchEngineErrorCode.INVALID_INPUT,
-                    GeoSearchEngineMessages.INVALID_INPUT);
+                    GeoSearchEngineMessages.INVALID_INPUT_LONGITUDE);
         }
         long startTime = System.currentTimeMillis();
         logger.info("Latitude::" + geopointResponseDto.getLatitude());

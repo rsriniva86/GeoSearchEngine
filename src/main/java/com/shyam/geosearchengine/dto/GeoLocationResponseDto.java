@@ -3,7 +3,6 @@ package com.shyam.geosearchengine.dto;
 public class GeoLocationResponseDto {
 
     private String location;
-
     private GeopointResponseDto geopointResponseDto;
 
     public GeoLocationResponseDto(String location, GeopointResponseDto geopointResponseDto) {

@@ -19,9 +19,11 @@ public enum GeoSearchResponseWrapper {
         try {
             returnMap.put("content", operation.doOperation());
         } catch (GeoSearchEngineException e) {
+            e.printStackTrace();
             returnMap.put("status", GeoSearchResponseStatus.FAILURE);
             returnMap.put("error", new GeoSearchEngineError(e.getCode().name(), e.getMessage()));
         } catch (Exception e) {
+            e.printStackTrace();
             returnMap.put("status", GeoSearchResponseStatus.FAILURE);
             returnMap.put("error", new GeoSearchEngineError(GeoSearchEngineErrorCode.GENERIC.name(),
                     e.getMessage()));
