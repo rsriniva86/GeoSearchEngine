@@ -292,7 +292,7 @@ class GeoInfoRangeFetcherTest {
         }
         catch (Exception e) {
             e.printStackTrace();
-            fail("exception is NOTexpected");
+            fail("exception is NOT expected");
         }
         fail("exception is expected");
     }
