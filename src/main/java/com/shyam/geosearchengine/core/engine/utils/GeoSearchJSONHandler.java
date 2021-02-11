@@ -2,9 +2,9 @@ package com.shyam.geosearchengine.core.engine.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.shyam.geosearchengine.models.GeoInfo;
-import com.shyam.geosearchengine.dto.GeopointResponseDto;
 import com.shyam.geosearchengine.dto.GeoInfoResponseDto;
+import com.shyam.geosearchengine.dto.GeopointResponseDto;
+import com.shyam.geosearchengine.models.GeoInfo;
 
 import java.util.List;
 import java.util.Map;

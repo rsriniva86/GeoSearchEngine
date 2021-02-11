@@ -36,17 +36,18 @@ class GeoInfoRangeFetcherTest {
     @BeforeEach
     void setUp() {
         geoInfoRepository = mock(GeoInfoRepository.class);
-        geoLocationRepository= mock(GeoLocationRepository.class);
-        inputGeopoint =new GeopointResponseDto(
+        geoLocationRepository = mock(GeoLocationRepository.class);
+        inputGeopoint = new GeopointResponseDto(
                 TestDataSet.getTestDataSets().get(0).getLatitude(),
                 TestDataSet.getTestDataSets().get(0).getLongitude()
-                );
+        );
 
     }
-    @Test
-    void test001_NoLocationWithinRange() {
 
-        List<GeoLocation> geoLocations=new ArrayList<>();
+    @Test
+    void test001NoLocationWithinRange() {
+
+        List<GeoLocation> geoLocations = new ArrayList<>();
         when(geoLocationRepository.findWithinXKms(
                 inputGeopoint.getLatitude()
                 , inputGeopoint.getLongitude()
@@ -66,17 +67,18 @@ class GeoInfoRangeFetcherTest {
                     geoInfoRepository,
                     geoLocationRepository,
                     inputGeopoint);
-            Object object=fetcher.doOperation();
-            assertTrue(object instanceof Map,"Object is not a map");
-            Map<String, List<GeoInfoResponseDto>> data= (Map<String, List<GeoInfoResponseDto>>) object;
-            assertTrue(data.size()==0,"Size is not zero");
+            Object object = fetcher.doOperation();
+            assertTrue(object instanceof Map, "Object is not a map");
+            Map<String, List<GeoInfoResponseDto>> data = (Map<String, List<GeoInfoResponseDto>>) object;
+            assertTrue(data.size() == 0, "Size is not zero");
         } catch (Exception e) {
             fail("Exception not expected");
         }
     }
+
     @Test
-    void test002_OneLocationWithInRange() {
-        List<GeoLocation> geoLocations=new ArrayList<>();
+    void test002OneLocationWithInRange() {
+        List<GeoLocation> geoLocations = new ArrayList<>();
         geoLocations.add(Utils.createGeoLocationObject(TestDataSet.getTestDataSets().get(0)));
 
         when(geoLocationRepository.findWithinXKms(
@@ -91,7 +93,7 @@ class GeoInfoRangeFetcherTest {
                 .map(GeoLocation::getId)
                 .collect(Collectors.toList());
 
-        List<GeoInfo> geoInfos=new ArrayList<>();
+        List<GeoInfo> geoInfos = new ArrayList<>();
         geoInfos.add(createGeoInfoObject(TestDataSet.getTestDataSets().get(0)));
 
         when(geoInfoRepository.findWithinXKms(locationIDList)).thenReturn(
@@ -102,15 +104,15 @@ class GeoInfoRangeFetcherTest {
                     geoInfoRepository,
                     geoLocationRepository,
                     inputGeopoint);
-            Object object=fetcher.doOperation();
-            assertTrue(object instanceof Map,"Object is not a map");
-            Map<String,List<GeoInfoResponseDto>> data= (Map<String, List<GeoInfoResponseDto>>) object;
-            assertEquals(1,data.size(),"Size is not one");
-            assertNotNull(data.get(TestDataSet.getTestDataSets().get(0).getLocation()),"List is null");
+            Object object = fetcher.doOperation();
+            assertTrue(object instanceof Map, "Object is not a map");
+            Map<String, List<GeoInfoResponseDto>> data = (Map<String, List<GeoInfoResponseDto>>) object;
+            assertEquals(1, data.size(), "Size is not one");
+            assertNotNull(data.get(TestDataSet.getTestDataSets().get(0).getLocation()), "List is null");
             List<GeoInfoResponseDto> geoInfoResponseDtoList1 =
                     data.get(
                             TestDataSet.getTestDataSets().get(0).getLocation());
-            assertTrue(geoInfoResponseDtoList1.size()==1,"Size of TestDataList is not one");
+            assertTrue(geoInfoResponseDtoList1.size() == 1, "Size of TestDataList is not one");
             testGeoInfoResponseDto(geoInfoResponseDtoList1.get(0), TestDataSet.getTestDataSets().get(0));
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,9 +120,10 @@ class GeoInfoRangeFetcherTest {
         }
 
     }
+
     @Test
-    void test003_MultipleLocationsWithInRange() {
-        List<GeoLocation> geoLocations=new ArrayList<>();
+    void test003MultipleLocationsWithInRange() {
+        List<GeoLocation> geoLocations = new ArrayList<>();
         geoLocations.add(Utils.createGeoLocationObject(TestDataSet.getTestDataSets().get(0)));
 
         when(geoLocationRepository.findWithinXKms(
@@ -135,7 +138,7 @@ class GeoInfoRangeFetcherTest {
                 .map(GeoLocation::getId)
                 .collect(Collectors.toList());
 
-        List<GeoInfo> geoInfos=new ArrayList<>();
+        List<GeoInfo> geoInfos = new ArrayList<>();
         geoInfos.add(createGeoInfoObject(TestDataSet.getTestDataSets().get(0)));
         geoInfos.add(createGeoInfoObject(TestDataSet.getTestDataSets().get(1)));
         geoInfos.add(createGeoInfoObject(TestDataSet.getTestDataSets().get(3)));
@@ -148,11 +151,11 @@ class GeoInfoRangeFetcherTest {
                     geoInfoRepository,
                     geoLocationRepository,
                     inputGeopoint);
-            Object object=fetcher.doOperation();
-            assertTrue(object instanceof Map,"Object is not a map");
-            Map<String,List<GeoInfoResponseDto>> data= (Map<String, List<GeoInfoResponseDto>>) object;
-            assertNotEquals(0,data.size(),"Size is zero");
-            for(int index=0;index<data.size();index++) {
+            Object object = fetcher.doOperation();
+            assertTrue(object instanceof Map, "Object is not a map");
+            Map<String, List<GeoInfoResponseDto>> data = (Map<String, List<GeoInfoResponseDto>>) object;
+            assertNotEquals(0, data.size(), "Size is zero");
+            for (int index = 0; index < data.size(); index++) {
                 assertNotNull(data.get(
                         TestDataSet.
                                 getTestDataSets().
@@ -162,10 +165,10 @@ class GeoInfoRangeFetcherTest {
                 List<GeoInfoResponseDto> geoInfoResponseDtoList =
                         data.get(
                                 TestDataSet.getTestDataSets().get(index).getLocation());
-                assertTrue(geoInfoResponseDtoList.size()>0,
-                        "Size of TestDataList is zero for index"+index);
-                for (GeoInfoResponseDto geoInfoResponseDto: geoInfoResponseDtoList) {
-                    int indexForDataSet= (int) (geoInfoResponseDto.getId()-1);
+                assertTrue(geoInfoResponseDtoList.size() > 0,
+                        "Size of TestDataList is zero for index" + index);
+                for (GeoInfoResponseDto geoInfoResponseDto : geoInfoResponseDtoList) {
+                    int indexForDataSet = (int) (geoInfoResponseDto.getId() - 1);
                     testGeoInfoResponseDto(
                             geoInfoResponseDto,
                             TestDataSet
@@ -182,11 +185,11 @@ class GeoInfoRangeFetcherTest {
     }
 
     @Test
-    void test004_GeoInfoRepositoryNull(){
-        GeoInfoRangeFetcher fetcher = new GeoInfoRangeFetcher(null,geoLocationRepository,inputGeopoint);
+    void test004GeoInfoRepositoryNull() {
+        GeoInfoRangeFetcher fetcher = new GeoInfoRangeFetcher(null, geoLocationRepository, inputGeopoint);
         try {
             fetcher.doOperation();
-        }catch (GeoSearchEngineException geoSearchEngineException){
+        } catch (GeoSearchEngineException geoSearchEngineException) {
             assertEquals(
                     GeoSearchEngineErrorCode.REPOSITORY_NOT_AVAILABLE,
                     geoSearchEngineException.getCode(), "Error code is not as expected");
@@ -195,53 +198,7 @@ class GeoInfoRangeFetcherTest {
                     geoSearchEngineException.getMessage(),
                     "message is not as expected");
             return;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            fail("exception is NOTexpected");
-        }
-        fail("exception is expected");
-    }
-    @Test
-    void test005_GeoLocationRepositoryNull(){
-        GeoInfoRangeFetcher fetcher = new GeoInfoRangeFetcher(geoInfoRepository,null,inputGeopoint);
-        try {
-            fetcher.doOperation();
-        }catch (GeoSearchEngineException geoSearchEngineException){
-            assertEquals(
-                    GeoSearchEngineErrorCode.REPOSITORY_NOT_AVAILABLE,
-                    geoSearchEngineException.getCode(), "Error code is not as expected");
-            assertEquals(
-                    GeoSearchEngineMessages.REPOSITORY_NOT_AVAILABLE,
-                    geoSearchEngineException.getMessage(),
-                    "message is not as expected");
-            return;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            fail("exception is NOTexpected");
-        }
-        fail("exception is expected");
-    }
-    @Test
-    void test006_GeoPointNull(){
-        GeoInfoRangeFetcher fetcher = new GeoInfoRangeFetcher(
-                geoInfoRepository,
-                geoLocationRepository,
-                null);
-        try {
-            fetcher.doOperation();
-        }catch (GeoSearchEngineException geoSearchEngineException){
-            assertEquals(
-                    GeoSearchEngineErrorCode.INVALID_INPUT,
-                    geoSearchEngineException.getCode(), "Error code is not as expected");
-            assertEquals(
-                    GeoSearchEngineMessages.INVALID_INPUT,
-                    geoSearchEngineException.getMessage(),
-                    "message is not as expected");
-            return;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("exception is NOTexpected");
         }
@@ -249,38 +206,35 @@ class GeoInfoRangeFetcherTest {
     }
 
     @Test
-    void test007_GeoPoint_InvalidLatitude_MaxRangeExceeded(){
-        GeoInfoRangeFetcher fetcher = new GeoInfoRangeFetcher(
-                geoInfoRepository,
-                geoLocationRepository,
-                new GeopointResponseDto(92,103));
+    void test005GeoLocationRepositoryNull() {
+        GeoInfoRangeFetcher fetcher = new GeoInfoRangeFetcher(geoInfoRepository, null, inputGeopoint);
         try {
             fetcher.doOperation();
-        }catch (GeoSearchEngineException geoSearchEngineException){
+        } catch (GeoSearchEngineException geoSearchEngineException) {
             assertEquals(
-                    GeoSearchEngineErrorCode.INVALID_INPUT,
+                    GeoSearchEngineErrorCode.REPOSITORY_NOT_AVAILABLE,
                     geoSearchEngineException.getCode(), "Error code is not as expected");
             assertEquals(
-                    GeoSearchEngineMessages.INVALID_INPUT,
+                    GeoSearchEngineMessages.REPOSITORY_NOT_AVAILABLE,
                     geoSearchEngineException.getMessage(),
                     "message is not as expected");
             return;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("exception is NOTexpected");
         }
         fail("exception is expected");
     }
+
     @Test
-    void test008_GeoPoint_InvalidLatitude_MinRangeExceeded(){
+    void test006GeoPointNull() {
         GeoInfoRangeFetcher fetcher = new GeoInfoRangeFetcher(
                 geoInfoRepository,
                 geoLocationRepository,
-                new GeopointResponseDto(-90.5,103));
+                null);
         try {
             fetcher.doOperation();
-        }catch (GeoSearchEngineException geoSearchEngineException){
+        } catch (GeoSearchEngineException geoSearchEngineException) {
             assertEquals(
                     GeoSearchEngineErrorCode.INVALID_INPUT,
                     geoSearchEngineException.getCode(), "Error code is not as expected");
@@ -289,22 +243,70 @@ class GeoInfoRangeFetcherTest {
                     geoSearchEngineException.getMessage(),
                     "message is not as expected");
             return;
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("exception is NOTexpected");
         }
-        catch (Exception e) {
+        fail("exception is expected");
+    }
+
+    @Test
+    void test007GeoPointInvalidLatitudeMaxRangeExceeded() {
+        GeoInfoRangeFetcher fetcher = new GeoInfoRangeFetcher(
+                geoInfoRepository,
+                geoLocationRepository,
+                new GeopointResponseDto(92, 103));
+        try {
+            fetcher.doOperation();
+        } catch (GeoSearchEngineException geoSearchEngineException) {
+            assertEquals(
+                    GeoSearchEngineErrorCode.INVALID_INPUT,
+                    geoSearchEngineException.getCode(), "Error code is not as expected");
+            assertEquals(
+                    GeoSearchEngineMessages.INVALID_INPUT,
+                    geoSearchEngineException.getMessage(),
+                    "message is not as expected");
+            return;
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("exception is NOTexpected");
+        }
+        fail("exception is expected");
+    }
+
+    @Test
+    void test008GeoPointInvalidLatitudeMinRangeExceeded() {
+        GeoInfoRangeFetcher fetcher = new GeoInfoRangeFetcher(
+                geoInfoRepository,
+                geoLocationRepository,
+                new GeopointResponseDto(-90.5, 103));
+        try {
+            fetcher.doOperation();
+        } catch (GeoSearchEngineException geoSearchEngineException) {
+            assertEquals(
+                    GeoSearchEngineErrorCode.INVALID_INPUT,
+                    geoSearchEngineException.getCode(), "Error code is not as expected");
+            assertEquals(
+                    GeoSearchEngineMessages.INVALID_INPUT,
+                    geoSearchEngineException.getMessage(),
+                    "message is not as expected");
+            return;
+        } catch (Exception e) {
             e.printStackTrace();
             fail("exception is NOT expected");
         }
         fail("exception is expected");
     }
+
     @Test
-    void test009_GeoPoint_InvalidLongitude_MaxRangeExceeded(){
+    void test009GeoPointInvalidLongitudeMaxRangeExceeded() {
         GeoInfoRangeFetcher fetcher = new GeoInfoRangeFetcher(
                 geoInfoRepository,
                 geoLocationRepository,
-                new GeopointResponseDto(65,180.5));
+                new GeopointResponseDto(65, 180.5));
         try {
             fetcher.doOperation();
-        }catch (GeoSearchEngineException geoSearchEngineException){
+        } catch (GeoSearchEngineException geoSearchEngineException) {
             assertEquals(
                     GeoSearchEngineErrorCode.INVALID_INPUT,
                     geoSearchEngineException.getCode(), "Error code is not as expected");
@@ -313,22 +315,22 @@ class GeoInfoRangeFetcherTest {
                     geoSearchEngineException.getMessage(),
                     "message is not as expected");
             return;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("exception is NOTexpected");
         }
         fail("exception is expected");
     }
+
     @Test
-    void test010_GeoPoint_InvalidLongitude_MinRangeExceeded(){
+    void test010GeoPointInvalidLongitudeMinRangeExceeded() {
         GeoInfoRangeFetcher fetcher = new GeoInfoRangeFetcher(
                 geoInfoRepository,
                 geoLocationRepository,
-                new GeopointResponseDto(90,-181));
+                new GeopointResponseDto(90, -181));
         try {
             fetcher.doOperation();
-        }catch (GeoSearchEngineException geoSearchEngineException){
+        } catch (GeoSearchEngineException geoSearchEngineException) {
             assertEquals(
                     GeoSearchEngineErrorCode.INVALID_INPUT,
                     geoSearchEngineException.getCode(), "Error code is not as expected");
@@ -337,11 +339,10 @@ class GeoInfoRangeFetcherTest {
                     geoSearchEngineException.getMessage(),
                     "message is not as expected");
             return;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("exception is NOTexpected");
         }
         fail("exception is expected");
     }
- }
+}

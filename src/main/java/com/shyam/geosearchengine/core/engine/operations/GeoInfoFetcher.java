@@ -25,7 +25,7 @@ public class GeoInfoFetcher implements GeoSearchEngineOperation {
     @Override
     public Object doOperation() throws Exception {
 
-        if(geoInfoRepository==null){
+        if (geoInfoRepository == null) {
             throw new GeoSearchEngineException(
                     GeoSearchEngineErrorCode.REPOSITORY_NOT_AVAILABLE,
                     GeoSearchEngineMessages.REPOSITORY_NOT_AVAILABLE);

@@ -3,12 +3,13 @@ package com.shyam.geosearchengine.core.engine.operations;
 import com.shyam.geosearchengine.core.engine.error.GeoSearchEngineErrorCode;
 import com.shyam.geosearchengine.core.engine.error.GeoSearchEngineException;
 import com.shyam.geosearchengine.core.engine.error.GeoSearchEngineMessages;
-import com.shyam.geosearchengine.testutils.TestDataSet;
-import com.shyam.geosearchengine.models.GeoInfo;
 import com.shyam.geosearchengine.dto.GeoInfoResponseDto;
+import com.shyam.geosearchengine.models.GeoInfo;
 import com.shyam.geosearchengine.repositories.GeoInfoRepository;
+import com.shyam.geosearchengine.testutils.TestDataSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,26 +30,26 @@ class GeoInfoFetcherTest {
     }
 
 
-
     @Test
-    void test001_EmptyTable() {
+    void test001EmptyTable() {
         when(geoInfoRepository.findAll()).thenReturn(
-          new ArrayList<>()
+                new ArrayList<>()
         );
         GeoInfoFetcher fetcher = new GeoInfoFetcher(geoInfoRepository);
         try {
-            Object object=fetcher.doOperation();
-            assertTrue(object instanceof Map,"Object is not a map");
-            Map<String,List<GeoInfoResponseDto>> data= (Map<String, List<GeoInfoResponseDto>>) object;
-            assertTrue(data.size()==0,"Size is not zero");
+            Object object = fetcher.doOperation();
+            assertTrue(object instanceof Map, "Object is not a map");
+            Map<String, List<GeoInfoResponseDto>> data = (Map<String, List<GeoInfoResponseDto>>) object;
+            assertTrue(data.size() == 0, "Size is not zero");
         } catch (Exception e) {
             fail("Exception not expected");
         }
     }
+
     @Test
-    void test002_SingleEntry() {
-        final Iterable<GeoInfo> testDataList= () -> {
-            List<GeoInfo> list=new ArrayList<>();
+    void test002SingleEntry() {
+        final Iterable<GeoInfo> testDataList = () -> {
+            List<GeoInfo> list = new ArrayList<>();
             list.add(createGeoInfoObject(TestDataSet.getTestDataSets().get(0)));
             return list.iterator();
         };
@@ -56,15 +57,15 @@ class GeoInfoFetcherTest {
 
         GeoInfoFetcher fetcher = new GeoInfoFetcher(geoInfoRepository);
         try {
-            Object object=fetcher.doOperation();
-            assertTrue(object instanceof Map,"Object is not a map");
-            Map<String,List<GeoInfoResponseDto>> data= (Map<String, List<GeoInfoResponseDto>>) object;
-            assertTrue(data.size()==1,"Size is not one");
-            assertNotNull(data.get(TestDataSet.getTestDataSets().get(0).getLocation()),"List is null");
+            Object object = fetcher.doOperation();
+            assertTrue(object instanceof Map, "Object is not a map");
+            Map<String, List<GeoInfoResponseDto>> data = (Map<String, List<GeoInfoResponseDto>>) object;
+            assertTrue(data.size() == 1, "Size is not one");
+            assertNotNull(data.get(TestDataSet.getTestDataSets().get(0).getLocation()), "List is null");
             List<GeoInfoResponseDto> geoInfoResponseDtoList1 =
                     data.get(
-                    TestDataSet.getTestDataSets().get(0).getLocation());
-            assertTrue(geoInfoResponseDtoList1.size()==1,"Size of TestDataList is not one");
+                            TestDataSet.getTestDataSets().get(0).getLocation());
+            assertTrue(geoInfoResponseDtoList1.size() == 1, "Size of TestDataList is not one");
             testGeoInfoResponseDto(geoInfoResponseDtoList1.get(0), TestDataSet.getTestDataSets().get(0));
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,10 +73,11 @@ class GeoInfoFetcherTest {
         }
 
     }
+
     @Test
-    void test003_MultipleEntries() {
-        final Iterable<GeoInfo> testDataList= () -> {
-            List<GeoInfo> list=new ArrayList<>();
+    void test003MultipleEntries() {
+        final Iterable<GeoInfo> testDataList = () -> {
+            List<GeoInfo> list = new ArrayList<>();
             list.add(createGeoInfoObject(TestDataSet.getTestDataSets().get(0)));
             list.add(createGeoInfoObject(TestDataSet.getTestDataSets().get(1)));
             list.add(createGeoInfoObject(TestDataSet.getTestDataSets().get(2)));
@@ -87,11 +89,11 @@ class GeoInfoFetcherTest {
 
         GeoInfoFetcher fetcher = new GeoInfoFetcher(geoInfoRepository);
         try {
-            Object object=fetcher.doOperation();
-            assertTrue(object instanceof Map,"Object is not a map");
-            Map<String,List<GeoInfoResponseDto>> data= (Map<String, List<GeoInfoResponseDto>>) object;
-            assertTrue(data.size()>0,"Size is zero");
-            for(int index=0;index<data.size();index++) {
+            Object object = fetcher.doOperation();
+            assertTrue(object instanceof Map, "Object is not a map");
+            Map<String, List<GeoInfoResponseDto>> data = (Map<String, List<GeoInfoResponseDto>>) object;
+            assertTrue(data.size() > 0, "Size is zero");
+            for (int index = 0; index < data.size(); index++) {
                 assertNotNull(data.get(
                         TestDataSet.
                                 getTestDataSets().
@@ -101,10 +103,10 @@ class GeoInfoFetcherTest {
                 List<GeoInfoResponseDto> geoInfoResponseDtoList =
                         data.get(
                                 TestDataSet.getTestDataSets().get(index).getLocation());
-                assertTrue(geoInfoResponseDtoList.size()>0,
-                        "Size of TestDataList is zero for index"+index);
-                for (GeoInfoResponseDto geoInfoResponseDto: geoInfoResponseDtoList) {
-                    int indexForDataSet= (int) (geoInfoResponseDto.getId()-1);
+                assertTrue(geoInfoResponseDtoList.size() > 0,
+                        "Size of TestDataList is zero for index" + index);
+                for (GeoInfoResponseDto geoInfoResponseDto : geoInfoResponseDtoList) {
+                    int indexForDataSet = (int) (geoInfoResponseDto.getId() - 1);
                     testGeoInfoResponseDto(
                             geoInfoResponseDto,
                             TestDataSet
@@ -122,23 +124,22 @@ class GeoInfoFetcherTest {
     }
 
     @Test
-    public void test004_GeoInfoRepositoryNull(){
+    public void test004GeoInfoRepositoryNull() {
         GeoInfoFetcher fetcher = new GeoInfoFetcher(null);
         try {
             fetcher.doOperation();
-        }catch (GeoSearchEngineException geoSearchEngineException){
+        } catch (GeoSearchEngineException geoSearchEngineException) {
             assertEquals(
                     GeoSearchEngineErrorCode.REPOSITORY_NOT_AVAILABLE,
                     geoSearchEngineException.getCode(), "Error code is not as expected");
             assertEquals(
                     GeoSearchEngineMessages.REPOSITORY_NOT_AVAILABLE,
                     geoSearchEngineException.getMessage(),
-                     "message is not as expected");
+                    "message is not as expected");
             return;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            fail("exception is NOTexpected");
+            fail("exception is NOT expected");
         }
         fail("exception is expected");
 

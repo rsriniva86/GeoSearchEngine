@@ -4,8 +4,8 @@ import com.shyam.geosearchengine.core.engine.GeoSearchResponseWrapper;
 import com.shyam.geosearchengine.core.engine.operations.*;
 import com.shyam.geosearchengine.dto.GeoLocationResponseDto;
 import com.shyam.geosearchengine.dto.GeopointResponseDto;
-import com.shyam.geosearchengine.repositories.GeoLocationRepository;
 import com.shyam.geosearchengine.repositories.GeoInfoRepository;
+import com.shyam.geosearchengine.repositories.GeoLocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
