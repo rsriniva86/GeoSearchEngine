@@ -6,13 +6,13 @@ import com.shyam.geosearchengine.repositories.GeoInfoRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class TestDataStatsFetcher implements GeoSearchEngineOperation {
+public class GeoInfoStatsFetcher implements GeoSearchEngineOperation {
 
     private final GeoInfoRepository geoInfoRepository;
     private final String name;
-    private final Logger logger = LogManager.getLogger(TestDataUpdator.class);
+    private final Logger logger = LogManager.getLogger(GeoInfoUpdator.class);
 
-    public TestDataStatsFetcher(GeoInfoRepository geoInfoRepository, String name) {
+    public GeoInfoStatsFetcher(GeoInfoRepository geoInfoRepository, String name) {
         this.geoInfoRepository = geoInfoRepository;
         this.name = name;
     }

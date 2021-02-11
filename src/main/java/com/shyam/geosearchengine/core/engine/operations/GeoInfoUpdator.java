@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TestDataUpdator implements GeoSearchEngineOperation {
+public class GeoInfoUpdator implements GeoSearchEngineOperation {
 
     private final GeoInfoRepository geoInfoRepository;
     private final GeoLocationRepository geoLocationRepository;
@@ -24,12 +24,12 @@ public class TestDataUpdator implements GeoSearchEngineOperation {
     private final GeoLocationResponseDto geoLocation;
     private final boolean isOverwrite;
 
-    private final Logger logger = LogManager.getLogger(TestDataUpdator.class);
+    private final Logger logger = LogManager.getLogger(GeoInfoUpdator.class);
 
-    public TestDataUpdator(GeoInfoRepository geoInfoRepository,
-                           GeoLocationRepository geoLocationRepository,
-                           int id,
-                           GeoLocationResponseDto geoLocation
+    public GeoInfoUpdator(GeoInfoRepository geoInfoRepository,
+                          GeoLocationRepository geoLocationRepository,
+                          int id,
+                          GeoLocationResponseDto geoLocation
                            ) {
         this.geoInfoRepository = geoInfoRepository;
         this.geoLocationRepository = geoLocationRepository;

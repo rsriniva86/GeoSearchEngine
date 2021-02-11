@@ -35,7 +35,7 @@ public class GeoSearchController {
 
     @GetMapping("stats")
     public Map<String, Object> nameStats(@RequestParam String name) {
-        GeoSearchEngineOperation operation = new TestDataStatsFetcher(geoInfoRepository, name);
+        GeoSearchEngineOperation operation = new GeoInfoStatsFetcher(geoInfoRepository, name);
         return GeoSearchResponseWrapper.INSTANCE.wrap(operation);
     }
 
@@ -43,7 +43,7 @@ public class GeoSearchController {
     public @ResponseBody
     Map<String, Object> updateGeoPointForData(@PathVariable int id,
                                               @RequestBody GeoLocationResponseDto geoLocation) {
-        GeoSearchEngineOperation operation = new TestDataUpdator(geoInfoRepository,
+        GeoSearchEngineOperation operation = new GeoInfoUpdator(geoInfoRepository,
                 geoLocationRepository,
                 id,
                 geoLocation);
