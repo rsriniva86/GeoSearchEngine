@@ -131,11 +131,13 @@ class GeoInfoFetcherTest {
         } catch (GeoSearchEngineException geoSearchEngineException) {
             assertEquals(
                     GeoSearchEngineErrorCode.REPOSITORY_NOT_AVAILABLE,
-                    geoSearchEngineException.getCode(), "Error code is not as expected");
+                    geoSearchEngineException.getCode(), "Error code is not as expected"
+            );
             assertEquals(
                     GeoSearchEngineMessages.REPOSITORY_NOT_AVAILABLE,
                     geoSearchEngineException.getMessage(),
-                    "message is not as expected");
+                    "message is not as expected"
+            );
             return;
         } catch (Exception e) {
             e.printStackTrace();
