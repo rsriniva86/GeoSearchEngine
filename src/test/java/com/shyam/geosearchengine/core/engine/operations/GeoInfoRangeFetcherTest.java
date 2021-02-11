@@ -1,6 +1,9 @@
 package com.shyam.geosearchengine.core.engine.operations;
 
 import com.shyam.geosearchengine.core.AppConfiguration;
+import com.shyam.geosearchengine.core.engine.error.GeoSearchEngineErrorCode;
+import com.shyam.geosearchengine.core.engine.error.GeoSearchEngineException;
+import com.shyam.geosearchengine.core.engine.error.GeoSearchEngineMessages;
 import com.shyam.geosearchengine.dto.GeoInfoResponseDto;
 import com.shyam.geosearchengine.dto.GeopointResponseDto;
 import com.shyam.geosearchengine.models.GeoInfo;
@@ -178,4 +181,167 @@ class GeoInfoRangeFetcherTest {
 
     }
 
-}
+    @Test
+    void test004_GeoInfoRepositoryNull(){
+        GeoInfoRangeFetcher fetcher = new GeoInfoRangeFetcher(null,geoLocationRepository,inputGeopoint);
+        try {
+            fetcher.doOperation();
+        }catch (GeoSearchEngineException geoSearchEngineException){
+            assertEquals(
+                    GeoSearchEngineErrorCode.REPOSITORY_NOT_AVAILABLE,
+                    geoSearchEngineException.getCode(), "Error code is not as expected");
+            assertEquals(
+                    GeoSearchEngineMessages.REPOSITORY_NOT_AVAILABLE,
+                    geoSearchEngineException.getMessage(),
+                    "message is not as expected");
+            return;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            fail("exception is NOTexpected");
+        }
+        fail("exception is expected");
+    }
+    @Test
+    void test005_GeoLocationRepositoryNull(){
+        GeoInfoRangeFetcher fetcher = new GeoInfoRangeFetcher(geoInfoRepository,null,inputGeopoint);
+        try {
+            fetcher.doOperation();
+        }catch (GeoSearchEngineException geoSearchEngineException){
+            assertEquals(
+                    GeoSearchEngineErrorCode.REPOSITORY_NOT_AVAILABLE,
+                    geoSearchEngineException.getCode(), "Error code is not as expected");
+            assertEquals(
+                    GeoSearchEngineMessages.REPOSITORY_NOT_AVAILABLE,
+                    geoSearchEngineException.getMessage(),
+                    "message is not as expected");
+            return;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            fail("exception is NOTexpected");
+        }
+        fail("exception is expected");
+    }
+    @Test
+    void test006_GeoPointNull(){
+        GeoInfoRangeFetcher fetcher = new GeoInfoRangeFetcher(
+                geoInfoRepository,
+                geoLocationRepository,
+                null);
+        try {
+            fetcher.doOperation();
+        }catch (GeoSearchEngineException geoSearchEngineException){
+            assertEquals(
+                    GeoSearchEngineErrorCode.INVALID_INPUT,
+                    geoSearchEngineException.getCode(), "Error code is not as expected");
+            assertEquals(
+                    GeoSearchEngineMessages.INVALID_INPUT,
+                    geoSearchEngineException.getMessage(),
+                    "message is not as expected");
+            return;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            fail("exception is NOTexpected");
+        }
+        fail("exception is expected");
+    }
+
+    @Test
+    void test007_GeoPoint_InvalidLatitude_MaxRangeExceeded(){
+        GeoInfoRangeFetcher fetcher = new GeoInfoRangeFetcher(
+                geoInfoRepository,
+                geoLocationRepository,
+                new GeopointResponseDto(92,103));
+        try {
+            fetcher.doOperation();
+        }catch (GeoSearchEngineException geoSearchEngineException){
+            assertEquals(
+                    GeoSearchEngineErrorCode.INVALID_INPUT,
+                    geoSearchEngineException.getCode(), "Error code is not as expected");
+            assertEquals(
+                    GeoSearchEngineMessages.INVALID_INPUT,
+                    geoSearchEngineException.getMessage(),
+                    "message is not as expected");
+            return;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            fail("exception is NOTexpected");
+        }
+        fail("exception is expected");
+    }
+    @Test
+    void test008_GeoPoint_InvalidLatitude_MinRangeExceeded(){
+        GeoInfoRangeFetcher fetcher = new GeoInfoRangeFetcher(
+                geoInfoRepository,
+                geoLocationRepository,
+                new GeopointResponseDto(-90.5,103));
+        try {
+            fetcher.doOperation();
+        }catch (GeoSearchEngineException geoSearchEngineException){
+            assertEquals(
+                    GeoSearchEngineErrorCode.INVALID_INPUT,
+                    geoSearchEngineException.getCode(), "Error code is not as expected");
+            assertEquals(
+                    GeoSearchEngineMessages.INVALID_INPUT,
+                    geoSearchEngineException.getMessage(),
+                    "message is not as expected");
+            return;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            fail("exception is NOTexpected");
+        }
+        fail("exception is expected");
+    }
+    @Test
+    void test009_GeoPoint_InvalidLongitude_MaxRangeExceeded(){
+        GeoInfoRangeFetcher fetcher = new GeoInfoRangeFetcher(
+                geoInfoRepository,
+                geoLocationRepository,
+                new GeopointResponseDto(65,180.5));
+        try {
+            fetcher.doOperation();
+        }catch (GeoSearchEngineException geoSearchEngineException){
+            assertEquals(
+                    GeoSearchEngineErrorCode.INVALID_INPUT,
+                    geoSearchEngineException.getCode(), "Error code is not as expected");
+            assertEquals(
+                    GeoSearchEngineMessages.INVALID_INPUT,
+                    geoSearchEngineException.getMessage(),
+                    "message is not as expected");
+            return;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            fail("exception is NOTexpected");
+        }
+        fail("exception is expected");
+    }
+    @Test
+    void test010_GeoPoint_InvalidLongitude_MinRangeExceeded(){
+        GeoInfoRangeFetcher fetcher = new GeoInfoRangeFetcher(
+                geoInfoRepository,
+                geoLocationRepository,
+                new GeopointResponseDto(90,-181));
+        try {
+            fetcher.doOperation();
+        }catch (GeoSearchEngineException geoSearchEngineException){
+            assertEquals(
+                    GeoSearchEngineErrorCode.INVALID_INPUT,
+                    geoSearchEngineException.getCode(), "Error code is not as expected");
+            assertEquals(
+                    GeoSearchEngineMessages.INVALID_INPUT,
+                    geoSearchEngineException.getMessage(),
+                    "message is not as expected");
+            return;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            fail("exception is NOTexpected");
+        }
+        fail("exception is expected");
+    }
+ }
