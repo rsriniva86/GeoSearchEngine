@@ -31,6 +31,10 @@ public class GeoLocation {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getLocation() {
         return location;
     }
@@ -53,10 +57,6 @@ public class GeoLocation {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     @Override

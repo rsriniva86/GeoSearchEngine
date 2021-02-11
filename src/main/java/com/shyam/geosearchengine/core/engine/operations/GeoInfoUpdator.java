@@ -1,13 +1,13 @@
 package com.shyam.geosearchengine.core.engine.operations;
 
 import com.shyam.geosearchengine.core.engine.utils.GeoSearchJSONHandler;
-import com.shyam.geosearchengine.models.GeoLocation;
-import com.shyam.geosearchengine.models.GeoInfo;
+import com.shyam.geosearchengine.dto.GeoInfoResponseDto;
 import com.shyam.geosearchengine.dto.GeoLocationResponseDto;
 import com.shyam.geosearchengine.dto.GeopointResponseDto;
-import com.shyam.geosearchengine.dto.GeoInfoResponseDto;
-import com.shyam.geosearchengine.repositories.GeoLocationRepository;
+import com.shyam.geosearchengine.models.GeoInfo;
+import com.shyam.geosearchengine.models.GeoLocation;
 import com.shyam.geosearchengine.repositories.GeoInfoRepository;
+import com.shyam.geosearchengine.repositories.GeoLocationRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,7 +30,7 @@ public class GeoInfoUpdator implements GeoSearchEngineOperation {
                           GeoLocationRepository geoLocationRepository,
                           int id,
                           GeoLocationResponseDto geoLocation
-                           ) {
+    ) {
         this.geoInfoRepository = geoInfoRepository;
         this.geoLocationRepository = geoLocationRepository;
         this.id = id;
