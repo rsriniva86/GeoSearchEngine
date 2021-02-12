@@ -1,5 +1,6 @@
 package com.shyam.geosearchengine.core.engine;
 
+import com.shyam.geosearchengine.core.JSONConstants;
 import com.shyam.geosearchengine.core.engine.error.GeoSearchEngineError;
 import com.shyam.geosearchengine.core.engine.error.GeoSearchEngineErrorCode;
 import com.shyam.geosearchengine.core.engine.error.GeoSearchEngineException;
@@ -12,20 +13,25 @@ import java.util.Map;
 public enum GeoSearchResponseWrapper {
     INSTANCE;
 
-    //TODO
+    /**
+     * This method wraps the success and failure scenario during the operations.
+     * Creates appropriate responses in the form of a Hashmap.
+     * @param operation
+     * @return
+     */
     public Map<String, Object> wrap(GeoSearchEngineOperation operation) {
         Map<String, Object> returnMap = new HashMap();
-        returnMap.put("status", GeoSearchResponseStatus.SUCCESS);
+        returnMap.put(JSONConstants.STATUS_TAG, GeoSearchResponseStatus.SUCCESS);
         try {
-            returnMap.put("content", operation.doOperation());
+            returnMap.put(JSONConstants.CONTENT_TAG, operation.doOperation());
         } catch (GeoSearchEngineException e) {
             e.printStackTrace();
-            returnMap.put("status", GeoSearchResponseStatus.FAILURE);
-            returnMap.put("error", new GeoSearchEngineError(e.getCode().name(), e.getMessage()));
+            returnMap.put(JSONConstants.STATUS_TAG, GeoSearchResponseStatus.FAILURE);
+            returnMap.put(JSONConstants.ERROR_TAG, new GeoSearchEngineError(e.getCode().name(), e.getMessage()));
         } catch (Exception e) {
             e.printStackTrace();
-            returnMap.put("status", GeoSearchResponseStatus.FAILURE);
-            returnMap.put("error", new GeoSearchEngineError(GeoSearchEngineErrorCode.GENERIC.name(),
+            returnMap.put(JSONConstants.STATUS_TAG, GeoSearchResponseStatus.FAILURE);
+            returnMap.put(JSONConstants.ERROR_TAG, new GeoSearchEngineError(GeoSearchEngineErrorCode.GENERIC.name(),
                     e.getMessage()));
         }
         return returnMap;

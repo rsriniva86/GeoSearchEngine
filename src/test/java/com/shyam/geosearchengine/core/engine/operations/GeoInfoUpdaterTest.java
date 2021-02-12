@@ -341,8 +341,11 @@ class GeoInfoUpdaterTest {
         try {
             Mockito.when(geoInfoRepository.findById(id)).thenReturn(
                     Utils.createGeoInfoObject(TestDataSet.getTestDataSets().get(0)));
-            Mockito.when(geoLocationRepository.findByLocation(inputGeolocation.getLocation())).thenReturn(
-                    Utils.createGeoLocationObject(TestDataSet.getTestDataSets().get(0))
+            Mockito.when(geoLocationRepository.findByLocation(
+                    inputGeolocation.getLocation()))
+                    .thenReturn
+                            (Utils.createGeoLocationObject
+                                    (TestDataSet.getTestDataSets().get(0))
             );
             inputGeolocation.getGeopoint().setLatitude(TestDataSet.getTestDataForUpdate().get(0).getLatitude());
             inputGeolocation.getGeopoint().setLongitude(TestDataSet.getTestDataForUpdate().get(0).getLongitude());
@@ -361,8 +364,12 @@ class GeoInfoUpdaterTest {
                     data.get(TestDataSet.getTestDataForUpdate().get(0).getLocation());
             assertEquals(1, geoInfoResponseDtoList.size());
             GeoInfoResponseDto geoInfoResponseDto = geoInfoResponseDtoList.get(0);
-            assertEquals(TestDataSet.getTestDataForUpdate().get(0).getLatitude(), geoInfoResponseDto.getGeopoint().getLatitude());
-            assertEquals(TestDataSet.getTestDataForUpdate().get(0).getLongitude(), geoInfoResponseDto.getGeopoint().getLongitude());
+            assertEquals(
+                    TestDataSet.getTestDataForUpdate().get(0).getLatitude(),
+                    geoInfoResponseDto.getGeopoint().getLatitude());
+            assertEquals(
+                    TestDataSet.getTestDataForUpdate().get(0).getLongitude(),
+                    geoInfoResponseDto.getGeopoint().getLongitude());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -390,22 +397,26 @@ class GeoInfoUpdaterTest {
             Map<String, Object> output = (Map<String, Object>) updater.doOperation();
             boolean isExistingLocation = (boolean) output.get("isExistingLocation");
             boolean isGeolocationOverwritten = (boolean) output.get("isGeolocationOverwritten");
-            Map<String, List<GeoInfoResponseDto>> data = (Map<String, List<GeoInfoResponseDto>>) output.get("data");
+            Map<String, List<GeoInfoResponseDto>> data =
+                    (Map<String, List<GeoInfoResponseDto>>) output.get("data");
             assertFalse(isExistingLocation);
             assertFalse(isGeolocationOverwritten);
             List<GeoInfoResponseDto> geoInfoResponseDtoList =
                     data.get(TestDataSet.getTestDataForUpdate().get(1).getLocation());
             assertEquals(1, geoInfoResponseDtoList.size());
             GeoInfoResponseDto geoInfoResponseDto = geoInfoResponseDtoList.get(0);
-            assertEquals(TestDataSet.getTestDataForUpdate().get(1).getLatitude(),
-                    geoInfoResponseDto.getGeopoint().getLatitude());
-            assertEquals(TestDataSet.getTestDataForUpdate().get(1).getLongitude(),
-                    geoInfoResponseDto.getGeopoint().getLongitude());
+            assertEquals(
+                    TestDataSet.getTestDataForUpdate().get(1).getLatitude(),
+                    geoInfoResponseDto.getGeopoint().getLatitude()
+            );
+            assertEquals(
+                    TestDataSet.getTestDataForUpdate().get(1).getLongitude(),
+                    geoInfoResponseDto.getGeopoint().getLongitude()
+            );
 
         } catch (Exception e) {
             e.printStackTrace();
             fail("exception is NOT expected");
         }
-
     }
 }

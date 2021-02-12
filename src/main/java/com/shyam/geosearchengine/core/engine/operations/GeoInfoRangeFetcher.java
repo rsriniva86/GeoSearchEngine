@@ -36,19 +36,25 @@ public class GeoInfoRangeFetcher implements GeoSearchEngineOperation {
 
     @Override
     public Object doOperation() throws Exception {
+        logger.info("doOperation");
         if (null == geoInfoRepository || null == geoLocationRepository) {
+            logger.error(GeoSearchEngineMessages.REPOSITORY_NOT_AVAILABLE);
             throw new GeoSearchEngineException(
                     GeoSearchEngineErrorCode.REPOSITORY_NOT_AVAILABLE,
                     GeoSearchEngineMessages.REPOSITORY_NOT_AVAILABLE);
         } else if (null == geopointResponseDto) {
+            logger.error(GeoSearchEngineMessages.INVALID_INPUT);
             throw new GeoSearchEngineException(
                     GeoSearchEngineErrorCode.INVALID_INPUT,
                     GeoSearchEngineMessages.INVALID_INPUT);
         } else if (!LatitudeLongitudeValidator.INSTANCE.isValidLatitude(geopointResponseDto.getLatitude())) {
+            logger.error(GeoSearchEngineMessages.INVALID_INPUT_LATITUDE);
+
             throw new GeoSearchEngineException(
                     GeoSearchEngineErrorCode.INVALID_INPUT,
                     GeoSearchEngineMessages.INVALID_INPUT_LATITUDE);
         } else if (!LatitudeLongitudeValidator.INSTANCE.isValidLongitude(geopointResponseDto.getLongitude())) {
+            logger.error(GeoSearchEngineMessages.INVALID_INPUT_LONGITUDE);
             throw new GeoSearchEngineException(
                     GeoSearchEngineErrorCode.INVALID_INPUT,
                     GeoSearchEngineMessages.INVALID_INPUT_LONGITUDE);
@@ -61,11 +67,12 @@ public class GeoInfoRangeFetcher implements GeoSearchEngineOperation {
                 geopointResponseDto.getLongitude(),
                 AppConfiguration.DISTANCE_RANGE
         );
+        logger.info(geoLocations);
         List<Long> locationIDList = StreamSupport
                 .stream(geoLocations.spliterator(), false)
                 .map(GeoLocation::getId)
                 .collect(Collectors.toList());
-
+        logger.info(locationIDList);
         Iterable<GeoInfo> testDataPoints = geoInfoRepository.findWithinXKms(locationIDList);
 
         long timeTaken = System.currentTimeMillis() - startTime;

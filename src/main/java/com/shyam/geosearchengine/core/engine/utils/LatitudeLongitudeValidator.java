@@ -1,5 +1,8 @@
 package com.shyam.geosearchengine.core.engine.utils;
 
+/**
+ * This singleton class is for helping in validating if latitude and longitudes are within permissible limits
+ */
 public enum LatitudeLongitudeValidator {
     INSTANCE;
 

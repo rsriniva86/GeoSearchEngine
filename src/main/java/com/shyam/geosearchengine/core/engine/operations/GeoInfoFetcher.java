@@ -25,7 +25,9 @@ public class GeoInfoFetcher implements GeoSearchEngineOperation {
     @Override
     public Object doOperation() throws Exception {
 
+        logger.info("doOperation");
         if (geoInfoRepository == null) {
+            logger.error("geo info repository is null");
             throw new GeoSearchEngineException(
                     GeoSearchEngineErrorCode.REPOSITORY_NOT_AVAILABLE,
                     GeoSearchEngineMessages.REPOSITORY_NOT_AVAILABLE);
@@ -39,6 +41,11 @@ public class GeoInfoFetcher implements GeoSearchEngineOperation {
                 GeoSearchJSONHandler
                         .INSTANCE
                         .groupByLocation(geoInfos);
+        if(null!=object) {
+            logger.info(object.toString());
+        }else{
+            logger.info("object is null");
+        }
         return object;
     }
 
